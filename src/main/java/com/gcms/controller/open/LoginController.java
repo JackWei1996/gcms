@@ -67,6 +67,16 @@ public class LoginController {
 		return "login";
 	}
 
+	@RequestMapping(value = "/demo/table", method = RequestMethod.GET)
+	public String demoTable() {
+		return "table";
+	}
+
+	@RequestMapping(value = "/demo/tu", method = RequestMethod.GET)
+	public String demoTu() {
+		return "tu";
+	}
+
 	/**
 	 * Method name: login <BR>
 	 * Description: 登录验证 <BR>
@@ -102,10 +112,6 @@ public class LoginController {
 	@ResponseBody
 	public ResultMap doRegist(User user) {
 		System.out.println(user);
-		User u = userService.getByPhone(user.getPhone());
-		if (u != null){
-			return resultMap.success().message("该身份证已注册!");
-		}
 		try {
 			user.setPassword(MD5.md5(user.getPassword()));
 			user.setCreateTime(new Date());

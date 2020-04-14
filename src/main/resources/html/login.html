@@ -4,45 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title>登录页面</title>
-<link th:href="@{/css/login.css}" href="css/login.css" rel="stylesheet" type="text/css" media="all"/>
-<script type="text/javascript" th:src="@{/js/jquery/jquery-3.3.1.js}" src="js/jquery/jquery-3.3.1.js" ></script>
-<link rel="stylesheet" th:href="@{/css/cloudstyle.css}" href="css/cloudstyle.css"/>
+<link th:href="@{css/font-awesome-4.7.0/css/font-awesome.min.css}" href="css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all"/>
+<link th:href="@{/css/style.css}" href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<script type="text/javascript" th:src="@{js/jquery.min.js}" src="js/jquery.min.js" ></script>
+<script type="text/javascript" th:src="@{js/index.js}" src="js/index.js" ></script>
 
 <!-- layer -->
 <link type="text/css" rel="stylesheet" th:href="@{/plug/layui/css/layui.css}"/>
 <script type="text/javascript" th:src="@{/plug/layui/layui.all.js}"  src="plug/layui/layui.all.js" ></script>
-<style>
-input::-webkit-input-placeholder {
-	color:#fff;
-}
-
-#login2 {
-    font-size: 20px;
-    font-weight: 700;
-    color: #fff;
-    padding: 13px 0;
-    background: #ffd400;
-    display: inline-block;
-    width: 50%;
-	outline:none;
-	border:2px  #FFF;
-	cursor:pointer;
-	text-transform:uppercase;
-}
-#login1 {
-    font-size: 20px;
-    font-weight: 700;
-    color: #fff;
-    padding: 13px 0;
-    background: #ff3366;
-    display: inline-block;
-    width: 50%;
-	outline:none;
-	border:2px  #FFF;
-	cursor:pointer;
-	text-transform:uppercase;
-}
-</style>
 
 <script type="text/javascript">
 
@@ -52,32 +21,14 @@ if(window != top){
 }
 $(function(){
 	
-	$(".index_top_div").focus();
-	
-	$("#name").on("focus", function(){
-		if($(this).attr("class") == "text_first"){
-			$(this).removeClass("text_first");
-			$(this).val("");
-		}
-	});
-	
-	$("#password").on("focus", function(){
-		if($(this).attr("class") == "text_first"){
-			$(this).parent().html("<input type='password' id='password' name='password' />");
-			document.getElementById("password").focus();
-		}
-	});
+
 });
 
 function login(){
-
-	if($("#param .text_first").length > 0){
-		return false;
-	}
 	// 准备参数
 	var param = new Object();
 	param.username = $.trim($("#name").val());
-	param.password = $.trim($("#password").val());
+	param.password = $.trim($("#pass").val());
 	
 	if(param.username == ""){
 		layer.alert('用户名不可为空', {icon: 0});
@@ -118,7 +69,7 @@ function regist(){
 function key_down(num){
 	if(num == 13) {
 		var name = $.trim($("#name").val());
-		var pass = $.trim($("#password").val());
+		var pass = $.trim($("#pass").val());
 		
 		if(name && pass){
 			login();
@@ -131,29 +82,57 @@ function key_down(num){
 </head>
 
 <body onkeydown="key_down(event.keyCode);">
-<div class="sky" style="position:absolute; width:100%; top:0px; bottom:0px; height:100%;opacity:0.75;"></div>
-<div class="login-form" style="position:relative;">
-		<div style="margin:0 auto; text-align:center;">
-			<img src="imgs/login/logo.png" alt="" style="width: 100px; height: 100px;"/>
+
+<div class="materialContainer">
+	<div class="box">
+		<div class="title">登录</div>
+		<div class="input">
+			<label for="name">用户名</label>
+			<input type="text" name="name" id="name">
+			<span class="spin"></span>
 		</div>
-		<h1>园区招商管理系统</h1>
-		<div class="login-top">
-		<form>
-			<div class="login-ic">
-				<i class="layui-icon layui-icon-username" style="font-size: 30px; color: #fff;"></i>
-				<input type="text"  placeholder="用户名" id="name"/>
-				<div class="clear"> </div>
-			</div>
-			<div class="login-ic">
-				<i class="layui-icon layui-icon-password" style="font-size: 30px; color: #fff;"></i>
-				<input type="password"  placeholder="密码" id="password" name="password"  />
-				<div class="clear"> </div>
-			</div>
-			<div class="log-bwn">
-            	<input type="button"  id="login2" value="登录" onclick="login()"><input type="button"  id="login1" value="注册" onclick="regist()">
-            </div>
-		</form>
+		<div class="input">
+			<label for="pass">密码</label>
+			<input type="password" name="pass" id="pass">
+			<span class="spin"></span>
+		</div>
+		<div class="button login">
+			<button onclick="login()">
+				<span>登录</span>
+				<i class="fa fa-check"></i>
+			</button>
+		</div>
+		<a href="javascript:" class="pass-forgot">忘记密码？</a>
 	</div>
+
+	<div class="overbox">
+		<div class="material-button alt-2">
+			<span class="shape"></span>
+		</div>
+		<div class="title">注册</div>
+		<div class="input">
+			<label for="regname">用户名</label>
+			<input type="text" name="regname" id="regname">
+			<span class="spin"></span>
+		</div>
+		<div class="input">
+			<label for="regpass">密码</label>
+			<input type="password" name="regpass" id="regpass">
+			<span class="spin"></span>
+		</div>
+		<div class="input">
+			<label for="reregpass">确认密码</label>
+			<input type="password" name="reregpass" id="reregpass">
+			<span class="spin"></span>
+		</div>
+		<div class="button">
+			<button>
+				<span>注册</span>
+			</button>
+		</div>
+	</div>
+
 </div>
+
 </body>
 </html>

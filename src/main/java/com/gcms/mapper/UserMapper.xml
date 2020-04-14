@@ -475,10 +475,10 @@
     <include refid="user_condition"></include>
   </select>
 
-  <select id="getName" parameterType="java.lang.String"
-          resultType="java.lang.String">
-		SELECT name
-		FROM user where id = #{id}
+  <select id="getByName" parameterType="java.lang.String"
+          resultMap="BaseResultMap">
+		SELECT *
+		FROM user where name = #{name}
 	</select>
 
   <select id="selectAllUser" parameterType="com.gcms.pojo.UserParameter" resultMap="BaseResultMap">

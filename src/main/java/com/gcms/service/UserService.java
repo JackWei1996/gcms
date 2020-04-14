@@ -38,14 +38,9 @@ public interface UserService {
 	User getAdminById(Long userId);
 
 	Object getAllDelUserByLimit(UserParameter userParameter);
-
-	String getName(String issueReporter);
-
 	List<User> selectAllUser();
 
 	User getUserByPhoneAndName(String phone, String name);
 
     void save(User user);
-
-	User getByPhone(String idCard);
 }
