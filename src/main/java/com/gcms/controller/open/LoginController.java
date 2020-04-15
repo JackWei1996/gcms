@@ -77,6 +77,21 @@ public class LoginController {
 		return "tu";
 	}
 
+	@RequestMapping(value = "/demo/tu1", method = RequestMethod.GET)
+	public String tu1() {
+		return "tu1";
+	}
+
+	@RequestMapping(value = "/demo/tu2", method = RequestMethod.GET)
+	public String tu2() {
+		return "tu2";
+	}
+
+	@RequestMapping(value = "/demo/tu3", method = RequestMethod.GET)
+	public String tu3() {
+		return "tu3";
+	}
+
 	/**
 	 * Method name: login <BR>
 	 * Description: 登录验证 <BR>
