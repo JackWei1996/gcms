@@ -429,18 +429,11 @@ function roleUserTable(roleId){
 	        indexCol: true,  //索引列
 	        cols: [{title: 'ID', name: 'id', width:60, hidden:true},
 				   {title: '姓名', name: 'name', width:80},
-				   {title: '联系电话', name: 'phone', width:100},
+				   {title: '城市', name: 'city', width:100},
 				   {title: '邮箱', name: 'email', width:100},
-				   {title: '身份证', name: 'idCard', width:100},
-				   {title: '类型', name: 'role', width:40, renderer:function(val, item, rowIndex){
-					   if(val == 1){
-						   return "<span style='color:red'>超级管理员</span>";
-					   }else if(val == 2){
-						   return "<span style='color:green'>企业用户</span>";
-					   }else if(val == 3){
-						   return "<span style='color:blue'>超级用户</span>";
-					   }
-				   }},
+				   {title: '创建时间', name: 'createTime', width:40, renderer:function(val, item, rowIndex){
+						return val;
+					}},
 				   {title: '操作', name: 'id', width:60, renderer:function(val, item, rowIndex){
 					   // alert(JSON.stringify(roleList));
 					   return "<a href='javascript:;' onclick='removeRole("+"\""+val+"\""+", "+rowIndex+")' style='color:red;' title='删除角色用户'>删除</a>";

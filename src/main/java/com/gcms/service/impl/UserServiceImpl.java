@@ -405,6 +405,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void save(User user) {
 		userMapper.insert(user);
+		UserRole userRole = new UserRole();
+		userRole.setUserId(user.getId()+"");
+		// 2是普通用户
+		userRole.setRoleId(2);
+		userRoleMapper.insert(userRole);
 	}
 
 }

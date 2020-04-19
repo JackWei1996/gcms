@@ -1,9 +1,11 @@
 package com.gcms.mapper;
 
+import com.gcms.pojo.Categorization;
 import com.gcms.pojo.Search;
 import com.gcms.pojo.SearchExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface SearchMapper {
     /**
@@ -93,4 +95,8 @@ public interface SearchMapper {
      * @mbg.generated Mon Apr 06 20:16:29 CST 2020
      */
     int updateByPrimaryKey(Search record);
+
+    List<Categorization> getAllByLimit(Search search);
+
+    int countAllByLimit(Search search);
 }

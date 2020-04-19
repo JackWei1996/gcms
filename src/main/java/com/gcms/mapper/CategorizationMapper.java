@@ -2,8 +2,9 @@ package com.gcms.mapper;
 
 import com.gcms.pojo.Categorization;
 import com.gcms.pojo.CategorizationExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface CategorizationMapper {
     /**
@@ -93,4 +94,10 @@ public interface CategorizationMapper {
      * @mbg.generated Mon Apr 06 20:16:29 CST 2020
      */
     int updateByPrimaryKey(Categorization record);
+
+    List<Categorization> getAllByLimit(Categorization categorization);
+
+    int countAllByLimit(Categorization categorization);
+
+    void viewCount(@Param("content") String content);
 }

@@ -283,4 +283,40 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+
+  <select id="getAllByLimit"
+          parameterType="com.gcms.pojo.Search"
+          resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM `search`
+    <where>
+      <if test="content!=null and content !=''" >
+        AND content like concat('%',#{content},'%')
+      </if>
+      <if test="userId!=null and userId !=''" >
+        AND user_id = #{userId}
+      </if>
+    </where>
+    ORDER BY id DESC
+    <if test="limit!=null">
+      limit #{page}, #{limit}
+    </if>
+  </select>
+
+  <select id="countAllByLimit"
+          parameterType="com.gcms.pojo.Search"
+          resultType="int">
+    SELECT count(id)
+    FROM `search`
+    <where>
+      <if test="content!=null and content !=''" >
+        AND content like concat('%',#{content},'%')
+      </if>
+      <if test="userId!=null and userId !=''" >
+        AND user_id = #{type}
+      </if>
+    </where>
+  </select>
 </mapper>

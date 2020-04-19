@@ -1,10 +1,7 @@
 package com.gcms.controller.admin;
 
 import com.gcms.model.ResultMap;
-import com.gcms.pojo.Page;
-import com.gcms.pojo.Role;
-import com.gcms.pojo.User;
-import com.gcms.pojo.UserParameter;
+import com.gcms.pojo.*;
 import com.gcms.service.*;
 import com.gcms.utils.MD5;
 import org.apache.shiro.SecurityUtils;
@@ -394,9 +391,9 @@ public class Adminontroller {
 			userService.addUser(user);
 
 			User u = userService.getUserByPhoneAndName(user.getPhone(), user.getName());
-
 			String[] ids = new String[1];
 			ids[0] = u.getId()+"";
+			userRoleService.addUserRole(3, ids);
 			return "SUCCESS";
 		} catch (Exception e) {
 			return "ERR";
@@ -426,4 +423,5 @@ public class Adminontroller {
 	public String delUserPage() {
 		return "sa/userDelPage";
 	}
+
 }

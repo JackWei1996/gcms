@@ -126,10 +126,14 @@ public class LoginController {
 	@RequestMapping(value = "/doRegist")
 	@ResponseBody
 	public ResultMap doRegist(User user) {
-		System.out.println(user);
+		User userByPhoneAndName = userService.getUserByPhoneAndName(null, user.getName());
+		if (userByPhoneAndName !=null){
+			return resultMap.fail().message("此用户名已注册!");
+		}
 		try {
 			user.setPassword(MD5.md5(user.getPassword()));
 			user.setCreateTime(new Date());
+			// 普通用户权限
 			userService.save(user);
 			return resultMap.success().message("注册成功");
 		}catch (Exception e){

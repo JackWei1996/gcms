@@ -2,8 +2,9 @@ package com.gcms.mapper;
 
 import com.gcms.pojo.Appointment;
 import com.gcms.pojo.AppointmentExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface AppointmentMapper {
     /**
@@ -93,4 +94,8 @@ public interface AppointmentMapper {
      * @mbg.generated Mon Apr 06 20:16:29 CST 2020
      */
     int updateByPrimaryKey(Appointment record);
+
+    List<Appointment> getAllByLimit(Appointment appointment);
+
+    int countAllByLimit(Appointment appointment);
 }

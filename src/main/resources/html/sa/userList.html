@@ -36,7 +36,7 @@
 			<td style="">
 			<div class="layui-btn-group">
 			  <button class="layui-btn" onclick="search()">查询</button>
-			  <button class="layui-btn" onclick="addRow()">增加</button>
+				<button class="layui-btn" onclick="addRow()">增加工作人员</button>
 			</div>
 			</td>
 		</tr>
@@ -70,18 +70,11 @@ $(function(){
         },
         cols: [{title: 'ID', name: 'id', width:60, hidden:true},
 			   {title: '姓名', name: 'name', width:50},
-			   {title: '身份证号', name: 'idCard', width:120},
+			   {title: '城市', name: 'city', width:120},
 			   {title: '移动电话', name: 'phone', width:60},
-			   {title: '职位', name: 'post', width:50},
 			   {title: '邮箱', name: 'email', width:120},
-			   {title: '类型', name: 'role', width:40, renderer:function(val, item, rowIndex){
-				   if(val == 1){
-					   return "<span style='color:red'>超级管理员</span>";
-				   }else if(val == 2){
-					   return "<span style='color:blue'>公司人员</span>";
-				   }else if(val == 3){
-					   return "<span style='color:green'>超级用户</span>";
-				   }
+			   {title: '创建时间', name: 'createTime', width:40, renderer:function(val, item, rowIndex){
+				  return val;
 			   }},
 			   {title: '操作', name: 'id', width:80, renderer:function(val, item, rowIndex){
 				   var buttonStr = '<span class=" layui-btn layui-btn-danger layui-btn-sm" onclick="deleteRowOne('+"\'"+item.id+"\'"+')" >删除</span>';
@@ -134,15 +127,7 @@ function deleteRowOne(id){
     	});
 	});
 }
-//增加用户
-function addRow(){
-	layer.open({
-	    type: 2,
-	    title: '增加用户',
-	    area: ['55%', '90%'],//宽高
-	    content: '/admin/addUserPage' //iframe的url
-	});
-}
+
 //修改标签
 function editRowOne(id){
 	layer.open({
@@ -159,6 +144,15 @@ function importUser(){
 	    title: '增加用户',
 	    area: ['70%', '90%'],
 	    content: '/admin/importUser' //iframe的url
+	});
+}
+
+function addRow(){
+	layer.open({
+		type: 2,
+		title: '增加',
+		area: ['70%', '80%'],
+		content: '/admin/addUserPage' //iframe的url
 	});
 }
 

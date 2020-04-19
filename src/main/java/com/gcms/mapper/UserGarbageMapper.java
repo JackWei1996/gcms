@@ -1,9 +1,11 @@
 package com.gcms.mapper;
 
+import com.gcms.pojo.Appointment;
 import com.gcms.pojo.UserGarbage;
 import com.gcms.pojo.UserGarbageExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface UserGarbageMapper {
     /**
@@ -93,4 +95,8 @@ public interface UserGarbageMapper {
      * @mbg.generated Mon Apr 06 20:16:29 CST 2020
      */
     int updateByPrimaryKey(UserGarbage record);
+
+    List<Appointment> getAllByLimit(UserGarbage userGarbage);
+
+    int countAllByLimit(UserGarbage userGarbage);
 }

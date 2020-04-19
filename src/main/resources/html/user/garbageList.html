@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<title>申请管理</title>
+<title>我的贡献</title>
 <link type="text/css" rel="stylesheet" th:href="@{/css/page.css}"/>
 <script type="text/javascript" th:src="@{/js/jquery/jquery-3.3.1.js}"></script>
 <!-- mmGrid -->
@@ -29,13 +29,18 @@
 	<table class="param_table" style="margin-left:10px;" >
 		<tr>
 			<td style="width:150px;">
-				<span>内容：</span>
-				<input type="text" id="info" name="info" class="input_0" />
+				<!--类型:1可回收,2干垃圾,3湿垃圾,4有害垃圾-->
+				<span>类型：</span>
+				<select id="type" name="type" class="input_0">
+					<option value="1">可回收</option>
+					<option value="2">干垃圾</option>
+					<option value="3">湿垃圾</option>
+					<option value="4">有害垃圾</option>
+				</select>
 			</td>
 			<td style="">
 			<div class="layui-btn-group">
 			  <button class="layui-btn" onclick="search()">查询</button>
-			  <button class="layui-btn" onclick="addRow()">增加</button>
 			</div>
 			</td>
 		</tr>
@@ -56,7 +61,7 @@ $(function(){
 	//表格
 	$('#exampleTableUser').mmGrid({
     	root:'rows',// 和后台数据保存列一致,对应MMGridPageVoBean rows
-		url:"/user/apply/getAllByLimit",
+		url:"/user/garbage/getAllByLimit",
     	width: 'auto',
     	height: 'auto',
     	//checkCol: true,
@@ -66,25 +71,14 @@ $(function(){
         indexCol: true,  //索引列
         params:function(){
         	var param = new Object();
-        	param.info = $.trim($("#info").val());
+        	param.type = $.trim($("#type").val());
         	return param;
         },
         cols: [{title: 'ID', name: 'id', width:60, hidden:true},
-			   {title: '内容', name: 'info', width:40},
-			   {title: '电话', name: 'phone', width:40},
-			   {title: '地址', name: 'address', width:40},
-			   {title: '申请时间', name: 'appTime', width:30},
-			   {title: '状态', name: 'status', width:100, renderer:function(val, item, rowIndex){
-			   	//状态:1申请中,2申请通过,3不通过,4已完成
-					   var t = "";
-					   switch (val) {
-						   case 1: t = "申请中";break;
-						   case 2: t = "申请通过";break;
-						   case 3: t = "不通过";break;
-						   case 4: t = "已完成";break;
-					   }
-					   return t;
-			   }}
+			   {title: '贡献克数', name: 'gram', width:40},
+			   {title: '类型', name: 'type', width:40},
+			   {title: '城市', name: 'city', width:40},
+			   {title: '创建时间', name: 'createTime', width:30}
            ],
         plugins : [
         	$('#paginator11-1').mmPaginator({
@@ -101,15 +95,6 @@ $(function(){
 //查询
 function search(){
 	$('#exampleTableUser').mmGrid().load({"page":1});
-}
-
-function addRow(){
-	layer.open({
-	    type: 2,
-	    title: '增加',
-	    area: ['60%', '70%'],
-	    content: '/user/apply/add' //iframe的url
-	});
 }
 
 </script>

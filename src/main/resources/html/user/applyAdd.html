@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<title>添加公司</title>
+<title>添加</title>
 <link type="text/css" rel="stylesheet" th:href="@{/css/page.css}" />
 <script type="text/javascript" th:src="@{/js/jquery/jquery-3.3.1.js}" ></script>
 <!-- validation -->
@@ -41,49 +41,48 @@
 </style>
 
 <script type="text/javascript"  th:inline="javascript">
-$(function(){
+layui.use('laydate', function(){
+	  var laydate = layui.laydate;
 
+	  //执行一个laydate实例
+	  laydate.render({
+	    elem: '#appTime' //指定元素
+          ,type: 'datetime'
+	    ,trigger : 'click'
+	  });
+});
+
+$(function(){
     $('form').validate({
         debug:true,
         /**//* 设置验证规则 */
         rules: {
-            name: {
-                required:true
-            }, phone: {
-                              required:true
-                          },
-        legalPerson: {
-                required:true
+            info: {
+                required: true
             },
-        address: {
-                required:true
+            phone: {
+                required: true
             },
-        money: {
-                        required:true
-                    },
-         content: {
-             required:true
-          }
+            address: {
+                required: true
+            },
+            appTime: {
+                required: true
+            }
         },
         /**//* 设置错误信息 */
         messages: {
-            name: {
-                required:"公司名不可为空"
+            info: {
+                required:"内容不可为空"
             },
-             phone: {
-                            required:"联系电话不可为空"
-                        },
-             legalPerson: {
-                            required:"法人不可为空"
-                        },
+            appTime: {
+                required:"预约时间不可为空"
+            },
+            phone: {
+                required:"预约电话不可为空"
+            },
             address: {
-                required:"地址不可为空"
-            },
-            money: {
-                required:"注册资金不可为空"
-            },
-            content: {
-                  required:"内容不可为空"
+                required:"预约地址不可为空"
             }
         },
         /**//* 设置验证触发事件 */
@@ -111,14 +110,18 @@ $(function(){
 //保存
 function save(){
 	var param = new Object();
-	param.name = $.trim($("#name").val());
-	param.legalPerson = $.trim($("#legalPerson").val());
-	param.address = $.trim($("#address").val());
-	param.money = $.trim($("#money").val());
+	param.info = $.trim($("#info").val());
 	param.phone = $.trim($("#phone").val());
-	param.content = $.trim($("#content").val());
+	param.address = $.trim($("#address").val());
+    var time = $("#appTime").val();
+    if(time!=null && time!=''){
+        time = time.split('-');
+        var myTime = new Date(time[0],(time[1]-1),time[2]);
+        param.appTime = myTime;
+    }
+
 	console.log(param);
-	var urlStr = "/company/add";
+	var urlStr = "/user/apply/doAdd";
 	
 	layer.confirm('确认保存吗？', {icon: 3, title:'提示'}, function(index){
 		$.ajax({
@@ -157,63 +160,43 @@ function save(){
 	<div id="adListDiv" align="left" >
 	<form>
 		<table class="form_table" style="border-collapse: collapse;margin-left:20px;margin-top:10px;">
-			<tr>
-				<td align="right" >
-				    <span class="need_0">*</span>
-					<span class="text_ad_0">公司名：</span>
-				</td>
-				<td>
-					<input id="name" name="name" class="input_0"/>
-					<span class="validation_span"></span>
-				</td>
-			</tr>
-			<tr>
+            <tr>
                 <td align="right" >
                     <span class="need_0">*</span>
-                    <span class="text_ad_0">法人：</span>
+                    <span class="text_ad_0">电话：</span>
                 </td>
                 <td>
-                    <input id="legalPerson" name="legalPerson" class="input_0"/>
+                    <input id="phone" type="text" name="phone" class="input_0"/>
                     <span class="validation_span"></span>
                 </td>
             </tr>
             <tr>
                 <td align="right" >
                     <span class="need_0">*</span>
-                    <span class="text_ad_0">联系电话：</span>
-                </td>
-                <td>
-                    <input id="phone" name="phone" class="input_0"/>
-                    <span class="validation_span"></span>
-                </td>
-            </tr>
-			<tr>
-                <td align="right" >
-                    <span class="need_0">*</span>
                     <span class="text_ad_0">地址：</span>
                 </td>
                 <td>
-                    <input id="address" name="address" class="input_0"/>
+                    <input id="address" type="text" name="address" class="input_0"/>
                     <span class="validation_span"></span>
                 </td>
             </tr>
 			<tr>
                 <td align="right" >
                     <span class="need_0">*</span>
-                    <span class="text_ad_0">注册资金：</span>
+                    <span class="text_ad_0">内容：</span>
                 </td>
                 <td>
-                    <input id="money" name="money" class="input_0"/>
+                    <textarea id="info" name="info" rows="4" cols="26"></textarea>
                     <span class="validation_span"></span>
                 </td>
             </tr>
-		    <tr>
+			<tr>
                 <td align="right" >
                     <span class="need_0">*</span>
-                    <span class="text_ad_0">公司简介：</span>
+                    <span class="text_ad_0">预约时间：</span>
                 </td>
                 <td>
-                    <textarea id="content" name="content" rows="4" cols="26"></textarea>
+                    <input id="appTime" type="text" name="appTime" class="input_0" value=""/>
                     <span class="validation_span"></span>
                 </td>
             </tr>

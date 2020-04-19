@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<title>合同管理</title>
+<title>搜索记录</title>
 <link type="text/css" rel="stylesheet" th:href="@{/css/page.css}"/>
 <script type="text/javascript" th:src="@{/js/jquery/jquery-3.3.1.js}"></script>
 <!-- mmGrid -->
@@ -29,22 +29,12 @@
 	<table class="param_table" style="margin-left:10px;" >
 		<tr>
 			<td style="width:150px;">
-				<span>合同名：</span>
-				<input type="text" id="title" name="title" class="input_0" />
+				<span>内容：</span>
+				<input type="text" id="content" name="content" class="input_0" />
 			</td>
-			<td style="width:150px;">
-                <span>甲方：</span>
-                <input type="text" id="firstParty" name="firstParty" class="input_0" />
-            </td>
-            <td style="width:150px;">
-                <span>乙方：</span>
-                <input type="text" id="secondParty" name="secondParty" class="input_0" />
-            </td>
-
 			<td style="">
 			<div class="layui-btn-group">
 			  <button class="layui-btn" onclick="search()">查询</button>
-			  <button class="layui-btn" onclick="addRow()">增加</button>
 			</div>
 			</td>
 		</tr>
@@ -59,11 +49,13 @@
 </html>
 
 <script type="text/javascript">
+
+
 $(function(){	
 	//表格
 	$('#exampleTableUser').mmGrid({
     	root:'rows',// 和后台数据保存列一致,对应MMGridPageVoBean rows
-		url:"/admin/contract/getAllByLimit",
+		url:"/user/search/getAllByLimit",
     	width: 'auto',
     	height: 'auto',
     	//checkCol: true,
@@ -73,23 +65,13 @@ $(function(){
         indexCol: true,  //索引列
         params:function(){
         	var param = new Object();
-        	param.title = $.trim($("#title").val());
-        	param.firstParty = $.trim($("#firstParty").val());
-        	param.secondParty = $.trim($("#secondParty").val());
+        	param.info = $.trim($("#info").val());
         	return param;
         },
         cols: [{title: 'ID', name: 'id', width:60, hidden:true},
-			   {title: '合同标题', name: 'title', width:50},
-			   {title: '甲方', name: 'firstParty', width:40},
-			   {title: '乙方', name: 'secondParty', width:40},
-			   {title: '金额', name: 'money', width:40},
-			   {title: '签约人', name: 'sign', width:40},
-			   {title: '签约时间', name: 'createTime', width:60},
-			   {title: '操作', name: 'id', width:80, renderer:function(val, item, rowIndex){
-				   var buttonStr ='<span class=" layui-btn layui-btn-sm" onclick="xq('+"\'"+item.id+"\'"+')" >详情</span>' +
-				    '<span class=" layui-btn layui-btn-danger layui-btn-sm" onclick="deleteRowOne('+"\'"+item.id+"\'"+')" >删除</span>';
-				   return "<div class='span_btus' >" + buttonStr + "</div>";
-			   }}
+			   {title: '内容', name: 'content', width:40},
+			   {title: '搜索次数', name: 'viewCount', width:40},
+			   {title: '搜索时间', name: 'createTime', width:30}
            ],
         plugins : [
         	$('#paginator11-1').mmPaginator({
@@ -108,47 +90,4 @@ function search(){
 	$('#exampleTableUser').mmGrid().load({"page":1});
 }
 
-//删除一行
-function deleteRowOne(id){
-	layer.confirm('确认删除吗？', {icon: 3, title:'提示'}, function(index){
-		var param = [];
-		param.push({"name":"ids", "value":id});
-    	$.ajax({
-    		type:"POST",
-    		async:true,  //默认true,异步
-    		data:param,
-    		url:"/admin/contract/del",
-    		success:function(data){
-    			if(data == "SUCCESS"){
-    				layer.alert('删除成功！', {icon: 1}, function(indexOk){
-    					search();
-    					layer.close(indexOk);
-       				});
-    			}else{
-    				layer.alert('删除失败！', {icon: 2}, function(indexNo){
-       					layer.close(indexNo);
-       				});
-    			}
-    	    }
-    	});
-	});
-}
-
-function xq(id){
-	layer.open({
-	    type: 2,
-	    title: '详情',
-	    area: ['70%', '80%'],
-	    content: '/admin/contract/xq?id='+id //iframe的url
-	});
-}
-
-function addRow(){
-	layer.open({
-	    type: 2,
-	    title: '增加',
-	    area: ['70%', '80%'],
-	    content: '/admin/contract/addContract' //iframe的url
-	});
-}
 </script>

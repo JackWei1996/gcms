@@ -70,8 +70,8 @@ $(function(){
    		$("#name").val(manageUser.name);
    		$("#phone").val(manageUser.phone);
    		$("#email").val(manageUser.email);
-   		$("#idCard").val(manageUser.idCard);
-   		$("#post").val(manageUser.post);
+   		$("#city").val(manageUser.city);
+   		$("#address").val(manageUser.address);
    	}
 	//验证数字长度
 	$.validator.addMethod(
@@ -134,9 +134,8 @@ $(function(){
 	        	email:true,
 	        	maxlength:100
 	        },
-	        Idcard: {
-	        	required:true,
-	        	 rangelength:[18, 18],
+	        city: {
+	        	required:true
 	        }
 	    },      
 	    /**//* 设置错误信息 */    
@@ -154,13 +153,12 @@ $(function(){
 	        	email:"请输入正确的邮箱",
 	        	maxlength:"最多100个字符"
 	        },
-	        userAddress: {
-	        	maxlength:"最多100个字符"
+			city: {
+				required:"城市不可为空"
 	        }
 	        ,
-	        userIdcard: {
-	        	required:"身份证不可为空",
-	        	rangelength:"身份证不正确",
+			address: {
+	        	required:"地址不可为空"
 	        }
 	    },      
 	    /**//* 设置验证触发事件 */
@@ -196,8 +194,8 @@ function save(){
 	param.name = $.trim($("#name").val());
 	param.phone = $.trim($("#phone").val());
 	param.email = $.trim($("#email").val());
-	param.idCard = $.trim($("#idCard").val());
-	param.post = $("#post").val();
+	param.city = $.trim($("#city").val());
+	param.address = $("#address").val();
 	
 	var urlStr = "/user/updateUser";
 	if(manageUser){
@@ -259,19 +257,19 @@ function save(){
 			<tr style="">
 				<td align="right" >
 				    <span class="need_0">*</span>
-					<span class="text_ad_0">身份证号：</span>
+					<span class="text_ad_0">城市：</span>
 				</td>
 				<td>
-					<input id="idCard" type="text" name="idCard" class="input_0" value="" />
+					<input id="city" type="text" name="city" class="input_0" value="" />
 					<span class="validation_span"></span>
 				</td>
 			</tr>
 			<tr>
 				<td align="right" >
-					<span class="text_ad_0">职位：</span>
+					<span class="text_ad_0">地址：</span>
 				</td>
 				<td>
-					<input id="post" type="text" name="post" class="input_0" value="" />
+					<input id="address" type="text" name="address" class="input_0" value="" />
 					<span class="validation_span"></span>
 				</td>
 			</tr>

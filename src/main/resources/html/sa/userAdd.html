@@ -152,10 +152,6 @@ $(function(){
 	    },      
 	    /**//* 设置错误信息 */    
 	    messages: {
-	        idCard: {
-	        	required:"身份证号不可为空",
-	        	rangelength:"输入的身份证错误",
-	        },
 	        name: {
 	        	required:"姓名不可为空",
 	        	rangelength:"姓名必须在2-20个字符之间",
@@ -208,10 +204,6 @@ function save(){
 	param.name = $.trim($("#name").val());
 	param.phone = $.trim($("#phone").val());
 	param.email = $.trim($("#email").val());
-	param.idCard = $.trim($("#idCard").val());
-	param.companyId = $.trim($("#companyId").val());
-	param.post = $.trim($("#post").val());
-	param.role = $.trim($("#role").val());
 	console.log(param);
 	var urlStr = "/admin/addUser";
 	
@@ -291,15 +283,6 @@ function save(){
 			</tr>
 			<tr>
 				<td align="right" >
-					<span class="text_ad_0">职位：</span>
-				</td>
-				<td>
-					<input id="post" type="text" name="post" class="input_0" value="" />
-					<span class="validation_span"></span>
-				</td>
-			</tr>
-			<tr>
-				<td align="right" >
 					<span class="need_0">*</span>
 					<span class="text_ad_0">移动电话：</span>
 				</td>
@@ -315,36 +298,6 @@ function save(){
 				<td>
 					<input id="email" type="text" name="email" class="input_0" />
 					<span class="validation_span"></span>
-				</td>
-			</tr>
-			<tr style="">
-				<td align="right" >
-				    <span class="need_0">*</span>
-					<span class="text_ad_0">身份证号：</span>
-				</td>
-				<td>
-					<input id="idCard" type="text" name="idCard" class="input_0" value="" />
-					<span class="validation_span"></span>
-				</td>
-			</tr>
-			<!--<tr style="">-->
-				<!--<td align="right" >-->
-					<!--<span class="text_ad_0">公司：</span>-->
-				<!--</td>-->
-				<!--<td>-->
-					<!--<input id="companyId" type="text" name="companyId" class="input_0" value="" />-->
-					<!--<span class="validation_span"></span>-->
-				<!--</td>-->
-			<!--</tr>-->
-			<tr>
-				<td style="" align="right">
-					<span class="text_ad_0">用户类型：</span>
-				</td>
-				<td >
-					<select id="role" name="role" class="input_0">
-						<option value="2">企业会员</option>
-						<option value="3">高级会员</option>
-					</select>
 				</td>
 			</tr>
 			<tr>

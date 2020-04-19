@@ -315,4 +315,44 @@
       info = #{info,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="getAllByLimit"
+          parameterType="com.gcms.pojo.Categorization"
+          resultMap="BaseResultMap">
+  SELECT
+  <include refid="Base_Column_List" />
+  FROM `categorization`
+   <where>
+     <if test="content!=null and content !=''" >
+       AND content like concat('%',#{content},'%')
+     </if>
+     <if test="type!=null and type !=''" >
+       AND type = #{type}
+     </if>
+   </where>
+  ORDER BY id DESC
+  <if test="limit!=null">
+    limit #{page}, #{limit}
+  </if>
+  </select>
+
+  <select id="countAllByLimit"
+          parameterType="com.gcms.pojo.Categorization"
+          resultType="int">
+    SELECT count(id)
+    FROM `categorization`
+    <where>
+      <if test="content!=null and content !=''" >
+        AND content like concat('%',#{content},'%')
+      </if>
+      <if test="type!=null and type !=''" >
+        AND type = #{type}
+      </if>
+    </where>
+  </select>
+  <update id="viewCount">
+    update categorization
+    set view_count = (view_count+1)
+    where content like concat('%',#{content},'%')
+  </update>
 </mapper>
