@@ -29,6 +29,24 @@ public class User {
      * @mbg.generated Mon Apr 06 20:16:29 CST 2020
      */
     private String name;
+    private String province;
+    private String area;
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
 
     /**
      *

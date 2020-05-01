@@ -19,6 +19,7 @@
     <result column="harmful_rank" jdbcType="INTEGER" property="harmfulRank" />
     <result column="rank" jdbcType="INTEGER" property="rank" />
     <result column="city_rank" jdbcType="INTEGER" property="cityRank" />
+    <result column="money_rank" jdbcType="INTEGER" property="moneyRank" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -96,7 +97,7 @@
       This element was generated on Mon Apr 06 20:16:29 CST 2020.
     -->
     id, user_id, recyclable_gram, dry_gram, wet_gram, harmful_gram, recyclable_rank, 
-    dry_rank, wet_rank, harmful_rank, rank, city_rank, create_time
+    dry_rank, wet_rank, harmful_rank, rank, city_rank, create_time,money_rank
   </sql>
   <select id="selectByExample" parameterType="com.gcms.pojo.UserRankExample" resultMap="BaseResultMap">
     <!--
@@ -158,12 +159,12 @@
       dry_gram, wet_gram, harmful_gram, 
       recyclable_rank, dry_rank, wet_rank, 
       harmful_rank, rank, city_rank, 
-      create_time)
+      create_time,money_rank)
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{recyclableGram,jdbcType=DOUBLE}, 
       #{dryGram,jdbcType=DOUBLE}, #{wetGram,jdbcType=DOUBLE}, #{harmfulGram,jdbcType=DOUBLE}, 
       #{recyclableRank,jdbcType=DOUBLE}, #{dryRank,jdbcType=INTEGER}, #{wetRank,jdbcType=INTEGER}, 
-      #{harmfulRank,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER}, #{cityRank,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP})
+      #{harmfulRank,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER}, #{cityRank,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP}, #{moneyRank,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.gcms.pojo.UserRank">
     <!--
@@ -310,6 +311,9 @@
       <if test="record.cityRank != null">
         city_rank = #{record.cityRank,jdbcType=INTEGER},
       </if>
+      <if test="record.moneyRank != null">
+        money_rank = #{record.moneyRank,jdbcType=INTEGER},
+      </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
@@ -336,6 +340,7 @@
       wet_rank = #{record.wetRank,jdbcType=INTEGER},
       harmful_rank = #{record.harmfulRank,jdbcType=INTEGER},
       rank = #{record.rank,jdbcType=INTEGER},
+    money_rank = #{record.moneyRank,jdbcType=INTEGER},
       city_rank = #{record.cityRank,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -374,6 +379,9 @@
       <if test="wetRank != null">
         wet_rank = #{wetRank,jdbcType=INTEGER},
       </if>
+      <if test="moneyRank != null">
+        money_rank = #{moneyRank,jdbcType=INTEGER},
+      </if>
       <if test="harmfulRank != null">
         harmful_rank = #{harmfulRank,jdbcType=INTEGER},
       </if>
@@ -406,6 +414,7 @@
       wet_rank = #{wetRank,jdbcType=INTEGER},
       harmful_rank = #{harmfulRank,jdbcType=INTEGER},
       rank = #{rank,jdbcType=INTEGER},
+    money_rank = #{moneyRank,jdbcType=INTEGER},
       city_rank = #{cityRank,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

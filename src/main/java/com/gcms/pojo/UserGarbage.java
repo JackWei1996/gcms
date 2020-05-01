@@ -21,6 +21,33 @@ public class UserGarbage extends BaseBean{
      */
     private Long userId;
     private Long handUserId;
+    private String province;
+    private String area;
+    private Double money;
+
+    public Double getMoney() {
+        return money;
+    }
+
+    public void setMoney(Double money) {
+        this.money = money;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
 
     /**
      *

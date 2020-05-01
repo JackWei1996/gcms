@@ -32,6 +32,10 @@ public class UserSearchController {
     public String fenleiList() {
         return "user/searchLog";
     }
+    @RequestMapping("/index")
+    public String index() {
+        return "search";
+    }
     /**
      * 返回查询数据
      */
@@ -75,4 +79,6 @@ public class UserSearchController {
             return "ERROR";
         }
     }
+
+
 }

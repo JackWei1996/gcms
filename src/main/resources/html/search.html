@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>查询页面</title>
+	<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+	<link th:href="@{../../css/bootstrap.min.css}" href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all"/>
+	<link th:href="@{../../imgs/favicon.ico}" href="../../imgs/favicon.ico" rel="icon" type="image/x-icon" media="all"/>
+	<script type="text/javascript" th:src="@{../../js/jquery.min.js}" src="../../js/jquery.min.js" ></script>
+	<script type="text/javascript" th:src="@{../../js/bootstrap.min.js}" src="../../js/bootstrap.min.js" ></script>
+
+</head>
+<body style="background-color:#ecf0f1">
+<style type="text/css">
+	.color_1 {
+		color: #3F85F1;
+		padding-left: 2px;
+	}
+	.color_2 {
+		color: #ec4335;
+		padding-left: 2px;
+	}
+	.color_3 {
+		color: #FCBC27;
+		padding-left: 2px;
+	}
+	.color_4 {
+		color: #2FA858;
+		padding-left: 2px;
+	}
+	.new_label {
+		display: inline-block;
+		padding: 4px 6px;
+		margin: 2px 4px;
+		line-height: 16px;
+		vertical-align: baseline;
+		white-space: nowrap;
+		background-color: #ecf0f1;;
+		color: #404040;
+		text-decoration: none;
+		border: 1px solid #7ba8ce;
+		border-radius: 8px;
+	}
+
+	a:hover,a:focus {
+		color: #0aa284;
+	}
+
+	.panel-body div {
+		overflow:hidden;
+		text-overflow:ellipsis;
+		white-space:nowrap;
+	}
+
+	.list_line div {
+		overflow:hidden;
+		text-overflow:ellipsis;
+		white-space:nowrap;
+	}
+
+	h1 {
+		font-size:30px;
+		margin-top: 13px;
+	}
+
+
+	ul {
+		padding-inline-start:0px;
+	}
+	ul li {
+		list-style: none;
+		font-size: 15px;
+		line-height: 1.4;
+	}
+
+	ul li a {
+		float: left;
+		color:#333;
+	}
+	ul li span {
+		float: right;
+	}
+
+	.fleft {
+		float: right;
+	}
+
+	.theader {
+		border-bottom-color: rgb(183, 9, 9);
+		border-bottom-color: #cccccc;
+		border-bottom-width: 1px;
+		border-bottom-style: solid;
+		font-size: 15px;
+		font-weight: bold;
+		padding: 0px 6px;
+		margin-bottom: 5px;
+	}
+
+	.city_list a {
+		padding: 4px 6px;
+		margin: 2px 4px;
+		color: black;
+		font-size: initial;
+	}
+
+	.label_title {
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	.z_list_a {
+		width: 70%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.flink a {
+		color:#787878;
+		margin-right: 10px;
+	}
+	.pydocx-caps {
+		text-transform: uppercase
+	}
+
+	.pydocx-center {
+		text-align: center
+	}
+
+	.pydocx-comment {
+		color: blue
+	}
+
+	.pydocx-delete {
+		color: red;
+		text-decoration: line-through
+	}
+
+	.pydocx-hidden {
+		visibility: hidden
+	}
+
+	.pydocx-insert {
+		color: green
+	}
+
+	.pydocx-left {
+		text-align: left
+	}
+
+	.pydocx-list-style-type-cardinalText {
+		list-style-type: decimal
+	}
+
+	.pydocx-list-style-type-decimal {
+		list-style-type: decimal
+	}
+
+	.pydocx-list-style-type-decimalEnclosedCircle {
+		list-style-type: decimal
+	}
+
+	.pydocx-list-style-type-decimalEnclosedFullstop {
+		list-style-type: decimal
+	}
+
+	.pydocx-list-style-type-decimalEnclosedParen {
+		list-style-type: decimal
+	}
+
+	.pydocx-list-style-type-decimalZero {
+		list-style-type: decimal-leading-zero
+	}
+
+	.pydocx-list-style-type-lowerLetter {
+		list-style-type: lower-alpha
+	}
+
+	.pydocx-list-style-type-lowerRoman {
+		list-style-type: lower-roman
+	}
+
+	.pydocx-list-style-type-none {
+		list-style-type: none
+	}
+
+	.pydocx-list-style-type-ordinalText {
+		list-style-type: decimal
+	}
+
+	.pydocx-list-style-type-upperLetter {
+		list-style-type: upper-alpha
+	}
+
+	.pydocx-list-style-type-upperRoman {
+		list-style-type: upper-roman
+	}
+
+	.pydocx-right {
+		text-align: right
+	}
+
+	.pydocx-small-caps {
+		font-variant: small-caps
+	}
+
+	.pydocx-strike {
+		text-decoration: line-through
+	}
+
+	.pydocx-tab {
+		display: inline-block;
+		width: 4em
+	}
+
+	.pydocx-underline {
+		text-decoration: underline
+	}
+
+	/*
+    body {
+        margin: 0px auto;
+        width: 49.61em
+    }
+    */
+
+	.about_list {
+		max-width: 600px;
+		display:inline-block;
+		text-align: justify;
+	}
+</style>
+<div class="container">
+
+	<div class="row hidden-xs">
+      <div style="height:30px"></div>
+  	</div>
+	<div class="row">
+		<div class="col-md-12  col-xs-12">
+			<div style="text-align: center;">
+				<img src="../../imgs/favicon.png" class="img-responsive center-block" width="50px" style="display: inline;">
+				<h1 style="display: inline;vertical-align: middle;">垃圾分类查询</h1>
+			</div>
+		</div>
+	</div>
+	<br>
+
+	<div class="row">
+		<div class="col-md-offset-2 col-md-8 col-xs-12">
+			<div style="text-align: center;display: flex">
+			  	<input name="URLz" class="form-control input-lg" value="香瓜子" placeholder="香瓜子" type="text" id="inputv" />
+			  	<button class="btn btn-primary input-lg" type="submit" onclick="subsearch()"><strong><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</strong></button>
+			</div>
+		</div>
+	</div>
+	<br>
+
+	<div class="row">
+		<div class="col-md-offset-2 col-md-8 col-xs-12" style="text-align: center;">
+			 <div id="tbk_ad" style="margin-bottom: 5px"></div>
+		</div>
+	</div>
+
+	<div class="row">
+	  <div class="col-md-offset-2 col-md-8 col-xs-12">
+			<span class="label_title color_1">相关查询：</span>
+				<a  class ="new_label" href="/sk/香瓜子">香瓜子</a> 
+				
+				<a  class ="new_label" href="/sk/瓜子">瓜子</a> 
+				
+				<a  class ="new_label" href="/sk/香瓜子壳">香瓜子壳</a> 
+				
+				<a  class ="new_label" href="/sk/瓜">瓜</a> 
+	  </div>
+	</div>
+	<br>
+
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10 col-xs-12" style="text-align: center;">
+
+			<div style="width:fit-content; display:inline-block;border: 1.3px dashed #3c85ee;border-radius: 8px;padding:0px 20px;"><h1><span style="color:#D42121;">香瓜子</span><span style="color:#FBbC28;">&nbsp;属于&nbsp;</span><span style="#2e2a2b">湿垃圾</span></h1></div>
+			<br>
+			<div style="display:inline-block">
+				<div style="display: inline;">&nbsp;</div>
+				<div style="display: inline;" class="addthis_inline_share_toolbox"></div>
+			</div>
+
+			<div id="adsense_middle"></div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10 col-xs-12">
+			<hr style="border-color: #d0d0d0">
+		</div>
+	</div>
+ 	
+
+ 	<div class="row">
+		<div class="col-md-offset-1 col-md-10 col-xs-12">
+			<div class="row">
+				<div class="col-md-12 col-xs-12"><h3 style="text-align: left;">湿垃圾是指</h3></div>
+				<div class="col-md-12 col-xs-12">日常生活垃圾产生的容易腐烂的生物质废弃物</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10 col-xs-12">
+			<div class="row">
+				<div class="col-md-12 col-xs-12"><h3 style="text-align: left;">湿垃圾主要包括</h3></div>
+				<div class="col-md-12 col-xs-12">剩菜剩饭、瓜皮果核、花芬绿植、过期食品等</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-offset-1 col-md-10 col-xs-12">
+			<div class="row">
+				<div class="col-md-12 col-xs-12"><h3 style="text-align: left;">湿垃圾投放要求</h3></div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 col-xs-12">
+					<ul>
+						<li>纯流质的食物垃圾、如牛奶等，应直接倒进下水口</li><li>有包装物的湿垃圾应将包装物去除后分类投放、包装物请投放到对应的可回收物或干垃圾容器</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br>
+	<div class="row">
+	  <div class="col-md-offset-1 col-md-10 col-xs-12">
+	    <span class="label_title color_2">近期查询：</span>
+	      <a class ="new_label" href="/sk/刀片">刀片</a> 
+
+	      <a class ="new_label" href="/sk/根茎蔬菜">根茎蔬菜</a> 
+
+	      <a class ="new_label" href="/sk/树叶">树叶</a> 
+
+	      <a class ="new_label" href="/sk/香瓜子">香瓜子</a> 
+
+	      <a class ="new_label" href="/sk/荧光笔">荧光笔</a> 
+
+	      <a class ="new_label" href="/sk/涂料">涂料</a> 
+
+	      <a class ="new_label" href="/sk/电动剃须刀">电动剃须刀</a> 
+
+	      <a class ="new_label" href="/sk/废铝">废铝</a> 
+
+	      <a class ="new_label" href="/sk/酱油瓶">酱油瓶</a> 
+
+	      <a class ="new_label" href="/sk/生玉米棒壳">生玉米棒壳</a> 
+
+	      <a class ="new_label" href="/sk/玉米杆">玉米杆</a> 
+
+	      <a class ="new_label" href="/sk/牛肉粒包装">牛肉粒包装</a> 
+
+	      <a class ="new_label" href="/sk/食品塑料，">食品塑料，</a> 
+
+	      <a class ="new_label" href="/sk/旧衣物">旧衣物</a> 
+
+	      <a class ="new_label" href="/sk/皮鞋">皮鞋</a> 
+
+	      <a class ="new_label" href="/sk/酒瓶盖">酒瓶盖</a> 
+
+	      <a class ="new_label" href="/sk/过口香糖">过口香糖</a> 
+
+	      <a class ="new_label" href="/sk/脏的橡胶手套">脏的橡胶手套</a> 
+
+	      <a class ="new_label" href="/sk/用纸巾包">用纸巾包</a> 
+
+	      <a class ="new_label" href="/sk/破陶瓷碗碟">破陶瓷碗碟</a> 
+
+	      <a class ="new_label" href="/sk/不干净的饮料瓶">不干净的饮料瓶</a> 
+
+	      <a class ="new_label" href="/sk/不干净的衣服">不干净的衣服</a> 
+
+	      <a class ="new_label" href="/sk/青菜皮">青菜皮</a> 
+
+	      <a class ="new_label" href="/sk/未被污染的塑料">未被污染的塑料</a> 
+
+	  </div>
+	</div>
+
+	<br>
+
+	<div class="row">
+	  <div class="col-md-offset-1 col-md-10 col-xs-12">
+	    <div id="adsense_bottom"></div>
+	  </div>
+	</div>
+	<br>
+
+	<br>
+	<div class="row">
+		  <div class="col-md-offset-1 col-md-10 col-xs-12">
+		    <div class="row"><span style="font-size: 20px;padding-left: 10px">上海市日常生活垃圾分为</span> </div>
+		    <br>
+		    
+		      <div class="row">
+
+		        <div class="col-md-6 col-xs-12"> 
+		          <div class="row" style="border: 1px dashed #dfdfdf;"> 
+		            <div class="col-md-3 col-xs-3"> 
+		              <img style="max-width: 100px;" alt="可回收物" src="../../imgs/1_3F6BA8.svg">
+		            </div> 
+		            <div class="col-md-9 col-xs-9" style="color: #3F6BA8;padding-left: 22px;vertical-align: middle;"> 
+		                <h3 style="margin-top: 0px">可回收物</h3> 
+		                <p style="">指废纸张、废塑料、废玻璃制品、废金属、废织物等适宜回收、可循环利用的生活废弃物。</p> 
+		            </div> 
+		          </div> 
+		        </div> 
+
+		        <div class="col-md-6 col-xs-12"> 
+		          <div class="row" style="border: 1px dashed #dfdfdf;"> 
+		            <div class="col-md-3 col-xs-3"> 
+		              <img style="max-width: 100px;" alt="有害垃圾" src="../../imgs/2v_B43953.svg">
+		            </div> 
+		            <div class="col-md-9 col-xs-9" style="color: #B43953;padding-left: 22px;vertical-align: middle;"> 
+		                <h3 style="margin-top: 0px">有害垃圾</h3> 
+		                <p style="">指废电池、废灯管、废药品、废油漆及其容器等对人体健康或者自然环境造成直接或者潜在危害的生活废弃物。</p> 
+		            </div> 
+		          </div> 
+		        </div> 
+		      </div>
+		      <div class="row">
+
+		        <div class="col-md-6 col-xs-12"> 
+		          <div class="row" style="border: 1px dashed #dfdfdf;"> 
+		            <div class="col-md-3 col-xs-3"> 
+		              <img style="max-width: 100px;" alt="湿垃圾" src="../../imgs/3v_8F6F55.svg">
+		            </div> 
+		            <div class="col-md-9 col-xs-9" style="color: #8F6F55;padding-left: 22px;vertical-align: middle;"> 
+		                <h3 style="margin-top: 0px">湿垃圾</h3> 
+		                <p style="">即易腐垃圾，指食材废料、剩菜剩饭、过期食品、瓜皮果核、花卉绿植、中药药渣等易腐的生物质生活废弃物。</p> 
+		            </div> 
+		          </div> 
+		        </div> 
+
+		        <div class="col-md-6 col-xs-12"> 
+		          <div class="row" style="border: 1px dashed #dfdfdf;"> 
+		            <div class="col-md-3 col-xs-3"> 
+		              <img style="max-width: 100px;" alt="干垃圾" src="../../imgs/4_2F3D39.svg">
+		            </div> 
+		            <div class="col-md-9 col-xs-9" style="color: #2F3D39;padding-left: 22px;vertical-align: middle;"> 
+		                <h3 style="margin-top: 0px">干垃圾</h3> 
+		                <p style="">即其它垃圾，指除可回收物、有害垃圾、湿垃圾以外的其它生活废弃物。</p> 
+		            </div> 
+		          </div> 
+		        </div> 
+		      </div>
+
+		  </div>
+		</div>
+
+</div>
+</body>
+</html>

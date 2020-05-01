@@ -41,23 +41,7 @@
 </style>
 
 <script type="text/javascript"  th:inline="javascript">
-
-layui.use('laydate', function(){
-	  var laydate = layui.laydate;
-	  
-	  //执行一个laydate实例
-	  laydate.render({
-	    elem: '#userBirthday' //指定元素
-	  });
-});
-
-function getTime(val){
-	if(val){		
-		val = val.split("T");
-		return val[0]; 
-	}
-	return "";
-}
+	var gtype = [[${gtype}]];
 
 $(function(){
 	//返回按钮
@@ -66,16 +50,27 @@ $(function(){
 		    parent.layer.closeAll();
 		});
 	});
+	if (gtype){
+		//回填值
+		$("#tip").val(gtype.tip);
+		$("#include").val(gtype.include);
+		$("#ask").val(gtype.ask);
+		$("#type").val(gtype.type);
+	}
 	//返回按钮
 	$("#saveBtu").click(function(){
 		var param = new Object();
-		param.content = $.trim($("#content").val());
+		param.tip = $.trim($("#tip").val());
+		param.include = $.trim($("#include").val());
+		param.ask = $.trim($("#ask").val());
 		param.type = $.trim($("#type").val());
-		param.value = $.trim($("#value").val());
-		param.harm = $.trim($("#harm").val());
-		param.info = $.trim($("#info").val());
 		console.log(param);
-		var urlStr = "/admin/fenlei/doAdd";
+		var urlStr = "/admin/type/doAdd";
+		if(gtype){
+			//修改
+			param.id = gtype.id;
+			urlStr = "/admin/type/update";
+		}
 
 		layer.confirm('确认保存吗？', {icon: 3, title:'提示'}, function(index){
 			$.ajax({
@@ -120,42 +115,10 @@ function closeSelf(){
 
 			<tr style="">
 				<td align="right" >
-					<span class="text_ad_0">内容：</span>
+					<span class="text_ad_0">标题：</span>
 				</td>
 				<td>
-					<input id="content" type="text" name="content" class="input_0" value="" />
-					<span class="validation_span"></span>
-				</td>
-			</tr>
-
-			<tr>
-				<td style="" align="right">
-					<span class="text_ad_0">类型：</span>
-				</td>
-				<td >
-					<select id="type" name="type" class="input_0">
-						<option value="1">可回收</option>
-						<option value="2">干垃圾</option>
-						<option value="3">湿垃圾</option>
-						<option value="4">有害垃圾</option>
-					</select>
-				</td>
-			</tr>
-			<tr style="">
-				<td align="right" >
-					<span class="text_ad_0">价值：</span>
-				</td>
-				<td>
-					<input id="value" type="text" name="value" class="input_0" value="" />
-					<span class="validation_span"></span>
-				</td>
-			</tr>
-			<tr style="">
-				<td align="right" >
-					<span class="text_ad_0">有害值：</span>
-				</td>
-				<td>
-					<input id="harm" type="text" name="harm" class="input_0" value="" />
+					<input id="type" type="text" name="type" class="input_0" value="" />
 					<span class="validation_span"></span>
 				</td>
 			</tr>
@@ -164,7 +127,25 @@ function closeSelf(){
 					<span class="text_ad_0">简介：</span>
 				</td>
 				<td>
-					<textarea id="info" name="info"  rows="3" cols="25"></textarea>
+					<textarea id="tip" name="tip"  rows="5" cols="25"></textarea>
+					<span class="validation_span"></span>
+				</td>
+			</tr>
+			<tr style="">
+				<td align="right" >
+					<span class="text_ad_0">主要包括：</span>
+				</td>
+				<td>
+					<textarea id="include" name="include"  rows="5" cols="25"></textarea>
+					<span class="validation_span"></span>
+				</td>
+			</tr>
+			<tr style="">
+				<td align="right" >
+					<span class="text_ad_0">投放要求：</span>
+				</td>
+				<td>
+					<textarea id="ask" name="ask"  rows="5" cols="25"></textarea>
 					<span class="validation_span"></span>
 				</td>
 			</tr>

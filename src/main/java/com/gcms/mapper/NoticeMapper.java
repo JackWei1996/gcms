@@ -2,8 +2,9 @@ package com.gcms.mapper;
 
 import com.gcms.pojo.Notice;
 import com.gcms.pojo.NoticeExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface NoticeMapper {
     /**
@@ -93,4 +94,8 @@ public interface NoticeMapper {
      * @mbg.generated Mon Apr 06 20:16:29 CST 2020
      */
     int updateByPrimaryKey(Notice record);
+
+    List<Notice> getAllByLimit(Notice po);
+
+    int countAllByLimit(Notice po);
 }

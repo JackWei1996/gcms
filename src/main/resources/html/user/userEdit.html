@@ -13,7 +13,6 @@
 <script type="text/javascript" th:src="@{/plug/layui/layui.js}"  charset="utf-8"></script>
 
 <link type="text/css" rel="stylesheet" th:href="@{/js/layer/skin/layer.css}"/>
-<script type="text/javascript" th:src="@{/js/layer/layer.js}" ></script>
 
 <style type="text/css">
 
@@ -41,15 +40,15 @@
 </style>
 
 <script type="text/javascript"  th:inline="javascript">
+	//引入新的插件
+	layui.config({
+		base: '../js/layer/'//拓展模块的根目录
+	}).extend({
+		pca: 'pca'
+	});
 
-layui.use('laydate', function(){
-	  var laydate = layui.laydate;
-	  
-	  //执行一个laydate实例
-	  laydate.render({
-	    elem: '#userBirthday' //指定元素
-	  });
-});
+	var manageUser = [[${manageUser}]];
+
 
 function getTime(val){
 	if(val){		
@@ -58,10 +57,51 @@ function getTime(val){
 	}
 	return "";
 }
-	
-var manageUser = [[${manageUser}]];
 
-$(function(){
+console.log(manageUser);
+console.log(manageUser.province);
+console.log(manageUser.city);
+console.log(manageUser.area);
+	//使用自定义的插件pca
+	layui.use(['form', 'layedit', 'laydate', 'upload', "jquery", "pca"], function () {
+		var $ = layui.$
+				, form = layui.form
+				, pca = layui.pca;
+		if (!manageUser.city){
+			//带初始值进行初始化
+			pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]', '江苏', '徐州', '云龙区');
+		}else{
+			pca.init('select[name=P1]', 'select[name=C1]', 'select[name=A1]', manageUser.province, manageUser.city, manageUser.area);
+		}
+		//输入提示
+		$("#address").bind('input propertychange', function () {
+					var address = document.getElementById("address").value;
+					if (address == "") {
+						document.getElementById("addressTip").style.display = "none";
+						return;
+					}
+					var html = '';
+					var province = document.getElementById("province").value;
+					if (province == "全部") {
+						province = '';
+					}
+					var city = document.getElementById("city").value;
+					if (city == "全部") {
+						city = '';
+					}
+					var area = document.getElementById("area").value;
+					if (area == "全部") {
+						area = '';
+					}
+					//查询关键字
+					var keywords = province + city + area + address;
+				}
+		);
+
+	});
+
+
+	$(function(){
    	if(manageUser){
    		//修改
    		$(".top_page_name").text("修改个人信息");
@@ -70,110 +110,8 @@ $(function(){
    		$("#name").val(manageUser.name);
    		$("#phone").val(manageUser.phone);
    		$("#email").val(manageUser.email);
-   		$("#city").val(manageUser.city);
    		$("#address").val(manageUser.address);
    	}
-	//验证数字长度
-	$.validator.addMethod(
-	    "mobilephone",
-	    function (value, element, param){
-	    	var length = value.length; 
-	    	var mobile = /^[0-9]{11}$/;
-	    	return this.optional(element) || (length == param && mobile.test(value)); 
-	    },
-	    "请输入正确的11位手机号码"
-    );
-	
-	//验证工作号码
-	$.validator.addMethod(
-	    "workNumber",
-	    function (value, element, param){
-	    	//var length = value.length; 
-	    	var mobile = /^((\d{3,5})-)(\d{6,10})(-(\d{1,5}))?$/;
-	    	return this.optional(element) || mobile.test(value); 
-	    },
-	    "请输入正确的工作号码"
-    );
-	
-	//验证id只包含数字字母
-	$.validator.addMethod(
-	    "withOutChinese",
-	    function (value, element, param){
-	    	var withOutChinese = /^[\w@.-]+$/;
-	    	return this.optional(element) || withOutChinese.test(value); 
-	    },
-	    "请输入字母和数字的组合(可以有@_.-)"
-    );
-	
-	//验证姓名(中文，数字，字母)
-	$.validator.addMethod(
-	    "onlyName",
-	    function (value, element, param){
-	    	var withOutChinese = /^([\u4E00-\u9FA5]|\w)*[^_]$/;
-	    	return this.optional(element) || withOutChinese.test(value); 
-	    },
-	    "请输入正确的姓名"
-    );
-	
-	//开始验证     
-	$('form').validate({
-		debug:true,
-	    /**//* 设置验证规则 */    
-	    rules: {
-	        name: {
-	            required:true,
-	            rangelength:[2, 20],
-	            onlyName:true
-	        },
-	        phone: {
-	        	required:true,
-	        	mobilephone:11
-	        },
-	        email: {
-	        	//required:true,
-	        	email:true,
-	        	maxlength:100
-	        },
-	        city: {
-	        	required:true
-	        }
-	    },      
-	    /**//* 设置错误信息 */    
-	    messages: {     
-	        name: {
-	        	required:"姓名不可为空",
-	        	rangelength:"姓名必须在2-20个字符之间",
-	        	onlyName:"请输入正确的姓名(中文,数字,字母)"
-	        },
-	        phone: {
-	        	required:"移动电话号码不可为空",
-	        	mobilephone:"请输入正确的手机号码"
-	        },
-			email: {
-	        	email:"请输入正确的邮箱",
-	        	maxlength:"最多100个字符"
-	        },
-			city: {
-				required:"城市不可为空"
-	        }
-	        ,
-			address: {
-	        	required:"地址不可为空"
-	        }
-	    },      
-	    /**//* 设置验证触发事件 */
-	    onsubmit:true,
-	    /**//* 设置错误信息提示DOM */    
-	    errorPlacement: function(error, element) {   
-	    	$(element[0]).parent().find(".validation_span").text(error.html()).show();  
-	    },
-	    success:function(error, element){
-	    	$(element[0]).parent().find(".validation_span").text("");  
-        },
-	    submitHandler: function (){
-	    	save();
-	    }
-	});
 	
 	//返回按钮
 	$("#backBtu").click(function(){
@@ -195,12 +133,30 @@ function save(){
 	param.phone = $.trim($("#phone").val());
 	param.email = $.trim($("#email").val());
 	param.city = $.trim($("#city").val());
+	param.area = $.trim($("#area").val());
+	param.province = $.trim($("#province").val());
 	param.address = $("#address").val();
 	
 	var urlStr = "/user/updateUser";
 	if(manageUser){
 		//修改
 		param.id = manageUser.id
+	}
+
+	if (param.address){
+		layer.alert('请填写地址！', {icon: 3}, function(indexNo){
+			layer.closeAll();
+		});
+	}
+	if (param.phone){
+		layer.alert('请填写电话！', {icon: 3}, function(indexNo){
+			layer.closeAll();
+		});
+	}
+	if (param.name){
+		layer.alert('请填写姓名！', {icon: 3}, function(indexNo){
+			layer.closeAll();
+		});
 	}
 	
 	layer.confirm('确认保存吗？', {icon: 3, title:'提示'}, function(index){
@@ -230,7 +186,6 @@ function save(){
 <div  style="margin-left:15px; height: 400px;">
 <div class="first_div" style="border:none;">
 	<div id="adListDiv" align="left" >
-	<form>
 		<table class="form_table" style="border-collapse: collapse;margin-left:20px;margin-top:10px;">
 			<tr>
 				<td align="right" >
@@ -253,19 +208,41 @@ function save(){
 					<span class="validation_span"></span>
 				</td>
 			</tr>
-
-			<tr style="">
-				<td align="right" >
-				    <span class="need_0">*</span>
-					<span class="text_ad_0">城市：</span>
-				</td>
-				<td>
-					<input id="city" type="text" name="city" class="input_0" value="" />
-					<span class="validation_span"></span>
-				</td>
-			</tr>
 			<tr>
 				<td align="right" >
+					<span class="need_0">*</span>
+					<span class="text_ad_0">省市区：</span>
+				</td>
+				<td>
+					<form class="layui-form layui-form-pane" action="">
+						<div class="layui-inline">
+							<form class="layui-form layui-form-pane" action="javascript:;">
+								<div class="layui-form-item" id="addressDiv">
+									<div class="layui-input-inline">
+										<select name="P1" lay-filter="province" id="province">
+											<option></option>
+										</select>
+									</div>
+									<div class="layui-input-inline">
+										<select name="C1" lay-filter="city" id="city">
+											<option></option>
+										</select>
+									</div>
+									<div class="layui-input-inline">
+										<select name="A1" lay-filter="area" id="area">
+											<option></option>
+										</select>
+									</div>
+								</div>
+							</form>
+						</div>
+					</form>
+				</td>
+			</tr>
+
+			<tr>
+				<td align="right" >
+					<span class="need_0">*</span>
 					<span class="text_ad_0">地址：</span>
 				</td>
 				<td>
@@ -286,13 +263,12 @@ function save(){
 			<tr>
 				<td colspan="2" align="left" >
 					<div style="margin-top:10px;margin-bottom:20px;margin-left:120px;">
-						<input type="submit" class="layui-btn" lay-submit="" lay-filter="add" id="saveBtu" name="saveBtu" value="保存" style="" />
+						<input type="button" class="layui-btn" lay-submit="" lay-filter="add" id="saveBtu" onclick="save()" value="保存" style="" />
 						<input type="button" class="layui-btn" lay-submit="" lay-filter="add" id="backBtu" name="backBtu" value="返回" style="margin-left:20px;" />
 					</div>
 				</td>
 			</tr>
 		</table>
-	</form>
 		</div>
 	</div>
 </div>

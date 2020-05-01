@@ -11,6 +11,15 @@ public class UserRank {
      * @mbg.generated Mon Apr 06 20:16:29 CST 2020
      */
     private Long id;
+    private Integer moneyRank;
+
+    public Integer getMoneyRank() {
+        return moneyRank;
+    }
+
+    public void setMoneyRank(Integer moneyRank) {
+        this.moneyRank = moneyRank;
+    }
 
     /**
      *
