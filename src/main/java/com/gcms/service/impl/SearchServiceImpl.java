@@ -61,4 +61,15 @@ public class SearchServiceImpl implements SearchService {
 
         return vo;
     }
+
+    @Override
+    public List<Search> newSearch(int i) {
+        return searchMapper.newSearch(i);
+    }
+
+    @Override
+    public List<Search> top(int i) {
+        return searchMapper.top(i);
+    }
+
 }

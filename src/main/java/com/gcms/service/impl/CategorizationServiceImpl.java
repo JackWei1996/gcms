@@ -3,6 +3,7 @@ package com.gcms.service.impl;
 import com.gcms.mapper.CategorizationMapper;
 import com.gcms.model.MMGridPageVoBean;
 import com.gcms.pojo.Categorization;
+import com.gcms.pojo.CategorizationExample;
 import com.gcms.service.CategorizationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,5 +50,17 @@ public class CategorizationServiceImpl implements CategorizationService {
     @Override
     public void add(Categorization categorization) {
         categorizationMapper.insert(categorization);
+    }
+
+    @Override
+    public List<Categorization> searchWord(String word) {
+        CategorizationExample example = new CategorizationExample();
+        example.createCriteria().andContentLike(word);
+        return categorizationMapper.selectByExample(example);
+    }
+
+    @Override
+    public void viewWord(String word) {
+        categorizationMapper.viewCount(word);
     }
 }

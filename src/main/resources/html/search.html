@@ -11,6 +11,46 @@
 	<script type="text/javascript" th:src="@{../../js/bootstrap.min.js}" src="../../js/bootstrap.min.js" ></script>
 
 </head>
+<script type="text/javascript"  th:inline="javascript">
+	var cList = [[${cList}]];
+	var sList = [[${sList}]];
+	var tList = [[${tList}]];
+
+	console.log(cList);
+	console.log(sList);
+
+	$(function(){
+		var xgcx = $("#xgcx");
+		xgcx.append('<span class="label_title color_1">相关查询：</span>');
+		if (cList){
+			for(var i=0; i<cList.length; i++){
+				xgcx.append('<a  class ="new_label" href="/user/search/index?word='+cList[i].content+'">'+cList[i].content+'</a> ');
+			}
+		}
+
+		// 近期查询
+		var jqcx = $("#jqcx");
+		jqcx.append('<span class="label_title color_2">近期查询：</span>');
+		if (sList){
+			for(var i=0; i<sList.length; i++){
+				jqcx.append('<a class ="new_label" href="/user/search/index?word='+sList[i].content+'">'+sList[i].content+'</a> ');
+			}
+		}
+
+		jqcx.append('</br><hr/><span class="label_title color_1">TOP 10 ：</span>');
+		if (tList){
+			for(var i=0; i<tList.length; i++){
+				jqcx.append('<a class ="new_label" href="/user/search/index?word='+tList[i].content+'">'+tList[i].content+'</a> ');
+			}
+		}
+
+	});
+
+	function searchWord() {
+		var word = $('#inputv').val();
+		window.location.href = "/user/search/index?word="+word;
+	}
+</script>
 <body style="background-color:#ecf0f1">
 <style type="text/css">
 	.color_1 {
@@ -249,8 +289,8 @@
 	<div class="row">
 		<div class="col-md-offset-2 col-md-8 col-xs-12">
 			<div style="text-align: center;display: flex">
-			  	<input name="URLz" class="form-control input-lg" value="香瓜子" placeholder="香瓜子" type="text" id="inputv" />
-			  	<button class="btn btn-primary input-lg" type="submit" onclick="subsearch()"><strong><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</strong></button>
+			  	<input name="URLz" class="form-control input-lg" value="" placeholder="" type="text" id="inputv" />
+			  	<button class="btn btn-primary input-lg" type="submit" onclick="searchWord()"><strong><span class="glyphicon glyphicon-search" aria-hidden="true"></span> 查询</strong></button>
 			</div>
 		</div>
 	</div>
@@ -263,15 +303,7 @@
 	</div>
 
 	<div class="row">
-	  <div class="col-md-offset-2 col-md-8 col-xs-12">
-			<span class="label_title color_1">相关查询：</span>
-				<a  class ="new_label" href="/sk/香瓜子">香瓜子</a> 
-				
-				<a  class ="new_label" href="/sk/瓜子">瓜子</a> 
-				
-				<a  class ="new_label" href="/sk/香瓜子壳">香瓜子壳</a> 
-				
-				<a  class ="new_label" href="/sk/瓜">瓜</a> 
+	  <div class="col-md-offset-2 col-md-8 col-xs-12" id="xgcx">
 	  </div>
 	</div>
 	<br>
@@ -279,7 +311,7 @@
 	<div class="row">
 		<div class="col-md-offset-1 col-md-10 col-xs-12" style="text-align: center;">
 
-			<div style="width:fit-content; display:inline-block;border: 1.3px dashed #3c85ee;border-radius: 8px;padding:0px 20px;"><h1><span style="color:#D42121;">香瓜子</span><span style="color:#FBbC28;">&nbsp;属于&nbsp;</span><span style="#2e2a2b">湿垃圾</span></h1></div>
+			<div style="width:fit-content; display:inline-block;border: 1.3px dashed #3c85ee;border-radius: 8px;padding:0px 20px;"><h1><span style="color:#D42121;" th:text="${wordName}">香瓜子</span><span style="color:#FBbC28;">&nbsp;属于&nbsp;</span><span style="#2e2a2b"  th:text="${wordTpye}">湿垃圾</span></h1></div>
 			<br>
 			<div style="display:inline-block">
 				<div style="display: inline;">&nbsp;</div>
@@ -300,8 +332,8 @@
  	<div class="row">
 		<div class="col-md-offset-1 col-md-10 col-xs-12">
 			<div class="row">
-				<div class="col-md-12 col-xs-12"><h3 style="text-align: left;">湿垃圾是指</h3></div>
-				<div class="col-md-12 col-xs-12">日常生活垃圾产生的容易腐烂的生物质废弃物</div>
+				<div class="col-md-12 col-xs-12"><h3 style="text-align: left;" th:text="${typeTipTitle}">湿垃圾是指</h3></div>
+				<div class="col-md-12 col-xs-12" th:text="${typeTip}">日常生活垃圾产生的容易腐烂的生物质废弃物</div>
 			</div>
 		</div>
 	</div>
@@ -310,8 +342,8 @@
 	<div class="row">
 		<div class="col-md-offset-1 col-md-10 col-xs-12">
 			<div class="row">
-				<div class="col-md-12 col-xs-12"><h3 style="text-align: left;">湿垃圾主要包括</h3></div>
-				<div class="col-md-12 col-xs-12">剩菜剩饭、瓜皮果核、花芬绿植、过期食品等</div>
+				<div class="col-md-12 col-xs-12"><h3 style="text-align: left;" th:text="${typeIncludeTitle}">湿垃圾主要包括</h3></div>
+				<div class="col-md-12 col-xs-12" th:text="${typeInclude}">剩菜剩饭、瓜皮果核、花芬绿植、过期食品等</div>
 			</div>
 		</div>
 	</div>
@@ -319,12 +351,12 @@
 	<div class="row">
 		<div class="col-md-offset-1 col-md-10 col-xs-12">
 			<div class="row">
-				<div class="col-md-12 col-xs-12"><h3 style="text-align: left;">湿垃圾投放要求</h3></div>
+				<div class="col-md-12 col-xs-12"><h3 style="text-align: left;" th:text="${typeAskTitle}">湿垃圾投放要求</h3></div>
 			</div>
 			<div class="row">
 				<div class="col-md-12 col-xs-12">
 					<ul>
-						<li>纯流质的食物垃圾、如牛奶等，应直接倒进下水口</li><li>有包装物的湿垃圾应将包装物去除后分类投放、包装物请投放到对应的可回收物或干垃圾容器</li>
+						<li th:text="${typeAsk}">纯流质的食物垃圾、如牛奶等，应直接倒进下水口</li>
 					</ul>
 				</div>
 			</div>
@@ -333,55 +365,8 @@
 
 	<br>
 	<div class="row">
-	  <div class="col-md-offset-1 col-md-10 col-xs-12">
-	    <span class="label_title color_2">近期查询：</span>
-	      <a class ="new_label" href="/sk/刀片">刀片</a> 
+	  <div class="col-md-offset-1 col-md-10 col-xs-12" id="jqcx">
 
-	      <a class ="new_label" href="/sk/根茎蔬菜">根茎蔬菜</a> 
-
-	      <a class ="new_label" href="/sk/树叶">树叶</a> 
-
-	      <a class ="new_label" href="/sk/香瓜子">香瓜子</a> 
-
-	      <a class ="new_label" href="/sk/荧光笔">荧光笔</a> 
-
-	      <a class ="new_label" href="/sk/涂料">涂料</a> 
-
-	      <a class ="new_label" href="/sk/电动剃须刀">电动剃须刀</a> 
-
-	      <a class ="new_label" href="/sk/废铝">废铝</a> 
-
-	      <a class ="new_label" href="/sk/酱油瓶">酱油瓶</a> 
-
-	      <a class ="new_label" href="/sk/生玉米棒壳">生玉米棒壳</a> 
-
-	      <a class ="new_label" href="/sk/玉米杆">玉米杆</a> 
-
-	      <a class ="new_label" href="/sk/牛肉粒包装">牛肉粒包装</a> 
-
-	      <a class ="new_label" href="/sk/食品塑料，">食品塑料，</a> 
-
-	      <a class ="new_label" href="/sk/旧衣物">旧衣物</a> 
-
-	      <a class ="new_label" href="/sk/皮鞋">皮鞋</a> 
-
-	      <a class ="new_label" href="/sk/酒瓶盖">酒瓶盖</a> 
-
-	      <a class ="new_label" href="/sk/过口香糖">过口香糖</a> 
-
-	      <a class ="new_label" href="/sk/脏的橡胶手套">脏的橡胶手套</a> 
-
-	      <a class ="new_label" href="/sk/用纸巾包">用纸巾包</a> 
-
-	      <a class ="new_label" href="/sk/破陶瓷碗碟">破陶瓷碗碟</a> 
-
-	      <a class ="new_label" href="/sk/不干净的饮料瓶">不干净的饮料瓶</a> 
-
-	      <a class ="new_label" href="/sk/不干净的衣服">不干净的衣服</a> 
-
-	      <a class ="new_label" href="/sk/青菜皮">青菜皮</a> 
-
-	      <a class ="new_label" href="/sk/未被污染的塑料">未被污染的塑料</a> 
 
 	  </div>
 	</div>
@@ -398,11 +383,7 @@
 	<br>
 	<div class="row">
 		  <div class="col-md-offset-1 col-md-10 col-xs-12">
-		    <div class="row"><span style="font-size: 20px;padding-left: 10px">上海市日常生活垃圾分为</span> </div>
-		    <br>
-		    
 		      <div class="row">
-
 		        <div class="col-md-6 col-xs-12"> 
 		          <div class="row" style="border: 1px dashed #dfdfdf;"> 
 		            <div class="col-md-3 col-xs-3"> 

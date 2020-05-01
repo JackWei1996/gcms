@@ -84,11 +84,11 @@ $(function(){
         	return param;
         },
         cols: [{title: 'ID', name: 'id', width:60, hidden:true},
-			   {title: '标题', name: 'type', width:50},
-			   {title: '简介', name: 'tip', width:40},
-			   {title: '主要包含', name: 'include', width:40},
-			   {title: '投放要求', name: 'ask', width:40},
-			   {title: '操作', name: 'id', width:80, renderer:function(val, item, rowIndex){
+			   {title: '标题', name: 'type', width:30},
+			   {title: '简介', name: 'tip', width:60},
+			   {title: '主要包含', name: 'include', width:60},
+			   {title: '投放要求', name: 'ask', width:60},
+			   {title: '操作', name: 'id', width:20, renderer:function(val, item, rowIndex){
 				   var buttonStr ='<span class=" layui-btn layui-btn-danger layui-btn-sm" onclick="deleteRowOne('+"\'"+item.id+"\'"+')" >删除</span>'+
 						   '<span class="layui-btn layui-btn-sm" onclick="updateOne('+"\'"+item.id+"\'"+')" >修改</span>';
 				   return "<div class='span_btus' >" + buttonStr + "</div>";

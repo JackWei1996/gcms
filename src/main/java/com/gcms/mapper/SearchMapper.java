@@ -99,4 +99,8 @@ public interface SearchMapper {
     List<Categorization> getAllByLimit(Search search);
 
     int countAllByLimit(Search search);
+
+    List<Search> newSearch(@Param("num") Integer i);
+
+    List<Search> top(@Param("num")Integer i);
 }

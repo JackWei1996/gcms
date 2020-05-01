@@ -1,9 +1,11 @@
 package com.gcms.controller.user;
 
 import com.gcms.pojo.Categorization;
+import com.gcms.pojo.GarbageType;
 import com.gcms.pojo.Search;
 import com.gcms.pojo.User;
 import com.gcms.service.CategorizationService;
+import com.gcms.service.GarbageTypeService;
 import com.gcms.service.SearchService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -13,10 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller("UserSearchController")
 @RequestMapping("/user/search")
@@ -25,6 +30,8 @@ public class UserSearchController {
     private SearchService searchService;
     @Autowired
     private CategorizationService categorizationService;
+    @Autowired
+    private GarbageTypeService garbageTypeService;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -33,7 +40,46 @@ public class UserSearchController {
         return "user/searchLog";
     }
     @RequestMapping("/index")
-    public String index() {
+    public String index(String word, Model model) {
+        List<Search> searchList = new ArrayList<>();
+        List<Search> topList = new ArrayList<>();
+        List<Categorization> categorizationList = new ArrayList<>();
+        if (word != null && !"".equals(word)){
+            // 相似查询
+            categorizationList = categorizationService.searchWord(word);
+            categorizationService.viewWord(word);
+            model.addAttribute("cList", categorizationList);
+            model.addAttribute("wordName", word);
+            if (categorizationList.size()>0){
+                Categorization c = categorizationList.get(0);
+                GarbageType byId = garbageTypeService.getById(c.getType());
+                model.addAttribute("wordTpye", byId.getType());
+                model.addAttribute("typeTipTitle", byId.getType()+"是指");
+                model.addAttribute("typeTip", byId.getTip());
+                model.addAttribute("typeIncludeTitle", byId.getType()+"主要包括");
+                model.addAttribute("typeInclude", byId.getInclude());
+                model.addAttribute("typeAskTitle", byId.getType()+"投放要求");
+                model.addAttribute("typeAsk", byId.getAsk());
+            }
+
+            Search search = new Search();
+            search.setContent(word);
+            Search byContent = searchService.getByContent(search);
+            if (byContent !=null){
+                byContent.setViewCount(byContent.getViewCount()+1);
+                searchService.update(byContent);
+            }else {
+                search.setViewCount(0L);
+                search.setCreateTime(new Date());
+                searchService.save(search);
+            }
+        }
+        // TOP 10
+        topList = searchService.top(10);
+        model.addAttribute("tList", topList);
+        // 最近查询
+        searchList = searchService.newSearch(10);
+        model.addAttribute("sList", searchList);
         return "search";
     }
     /**

@@ -319,4 +319,28 @@
       </if>
     </where>
   </select>
+
+  <select id="newSearch"
+          parameterType="com.gcms.pojo.Search"
+          resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM `search`
+    ORDER BY id DESC
+    <if test="num!=null">
+      limit #{num}
+    </if>
+  </select>
+
+  <select id="top"
+          parameterType="com.gcms.pojo.Search"
+          resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM `search`
+    ORDER BY view_count DESC
+    <if test="num!=null">
+      limit #{num}
+    </if>
+  </select>
 </mapper>
