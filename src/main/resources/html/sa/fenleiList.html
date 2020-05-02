@@ -128,7 +128,7 @@ function search(){
 function deleteRowOne(id){
 	layer.confirm('确认删除吗？', {icon: 3, title:'提示'}, function(index){
 		var param = [];
-		param.push({"name":"ids", "value":id});
+		param.push({"name":"id", "value":id});
     	$.ajax({
     		type:"POST",
     		async:true,  //默认true,异步

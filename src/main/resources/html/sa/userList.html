@@ -63,6 +63,7 @@ $(function(){
     	//checkCol: true,
     	fullWidthRows: true, //表格第一次加载数据时列伸展，自动充满表格
     	showBackboard: false,
+		nowrap: true,
         //multiSelect: true,
         indexCol: true,  //索引列
         params:function(){
@@ -72,13 +73,13 @@ $(function(){
         	return param;
         },
         cols: [{title: 'ID', name: 'id', width:10, hidden:true},
-			   {title: '姓名', name: 'name', width:10 ,nowrap:true},
+			   {title: '姓名', name: 'name', width:10 },
 			   {title: '省份', name: 'province', width:10},
 			   {title: '城市', name: 'city', width:10},
 			   {title: '区域', name: 'area', width:10},
-			   {title: '地址', name: 'address', width:40 ,nowrap:true},
+			   {title: '地址', name: 'address', width:40 },
 			   {title: '移动电话', name: 'phone', width:40},
-			   {title: '邮箱', name: 'email', width:40 ,nowrap:true},
+			   {title: '邮箱', name: 'email', width:40 },
 			   {title: '创建时间', name: 'createTime', width:40, renderer:function(val, item, rowIndex){
 				  return val;
 			   }},

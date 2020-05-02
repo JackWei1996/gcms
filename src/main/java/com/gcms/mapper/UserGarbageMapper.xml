@@ -345,6 +345,11 @@
       <if test="userId!=null and userId !=''" >
         AND user_id = #{userId}
       </if>
+      <if test="city!=null and city !=''" >
+        AND (province like CONCAT('%', #{city}, '%')
+        OR city like CONCAT('%', #{city}, '%')
+        OR area like CONCAT('%', #{city}, '%') )
+      </if>
     </where>
     ORDER BY id DESC
     <if test="limit!=null">
@@ -363,6 +368,11 @@
       </if>
       <if test="userId!=null and userId !=''" >
         AND user_id = #{userId}
+      </if>
+      <if test="city!=null and city !=''" >
+        AND (province like CONCAT('%', #{city}, '%')
+        OR city like CONCAT('%', #{city}, '%')
+        OR area like CONCAT('%', #{city}, '%') )
       </if>
     </where>
   </select>
