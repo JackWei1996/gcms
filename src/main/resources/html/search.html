@@ -60,7 +60,6 @@
 		option = {
 			title: {
 				text: '价值和危害等级饼图',
-				subtext: '危害等级(1-5级),每千克/元',
 				left: 'center'
 			},
 			tooltip: {
@@ -70,7 +69,7 @@
 			legend: {
 				orient: 'vertical',
 				left: 'left',
-				data: ['危害等级(1-5级)', '每千克/元']
+				data: ['危害等级(0-4级)', '每千克/元']
 			},
 			series: [
 				{
@@ -79,7 +78,7 @@
 					radius: '55%',
 					center: ['50%', '60%'],
 					data: [
-						{value: vh, name: '危害等级'},
+						{value: vh, name: '危害等级(0-4级)'},
 						{value: vv, name: '每千克/元'}
 					],
 					emphasis: {

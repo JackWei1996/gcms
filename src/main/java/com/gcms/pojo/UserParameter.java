@@ -6,6 +6,15 @@ public class UserParameter extends BaseBean {
 	private String name;
 	private String userName;
 	private Integer post;
+	private String city;
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
 
 	public String getId() {
 		return id;
