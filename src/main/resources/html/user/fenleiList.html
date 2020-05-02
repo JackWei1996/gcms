@@ -84,7 +84,7 @@ $(function(){
 					}
 					return t;
 				}},
-			{title: '价值含量(每千克/元)', name: 'value', width:40},
+			   {title: '价值含量(每千克/元)', name: 'value', width:40},
 			{title: '有害等级', name: 'harm', width:40, renderer:function(val, item, rowIndex){
 					var t = "";
 					switch (val) {
@@ -96,11 +96,7 @@ $(function(){
 					}
 					return t;
 				}},
-			   {title: '浏览数', name: 'viewCount', width:40},
-			   {title: '操作', name: 'op', width:20, renderer:function(val, item, rowIndex){
-				   var buttonStr ='<span class=" layui-btn layui-btn-danger layui-btn-sm" onclick="deleteRowOne('+"\'"+item.id+"\'"+')" >删除</span>';
-				   return "<div class='span_btus' >" + buttonStr + "</div>";
-			   }}
+			   {title: '浏览数', name: 'viewCount', width:40}
            ],
         plugins : [
         	$('#paginator11-1').mmPaginator({
@@ -119,38 +115,4 @@ function search(){
 	$('#exampleTableUser').mmGrid().load({"page":1});
 }
 
-//删除一行
-function deleteRowOne(id){
-	layer.confirm('确认删除吗？', {icon: 3, title:'提示'}, function(index){
-		var param = [];
-		param.push({"name":"ids", "value":id});
-    	$.ajax({
-    		type:"POST",
-    		async:true,  //默认true,异步
-    		data:param,
-    		url:"/admin/fenlei/del",
-    		success:function(data){
-    			if(data == "SUCCESS"){
-    				layer.alert('删除成功！', {icon: 1}, function(indexOk){
-    					search();
-    					layer.close(indexOk);
-       				});
-    			}else{
-    				layer.alert('删除失败！', {icon: 2}, function(indexNo){
-       					layer.close(indexNo);
-       				});
-    			}
-    	    }
-    	});
-	});
-}
-
-function addRow(){
-	layer.open({
-	    type: 2,
-	    title: '增加',
-	    area: ['70%', '80%'],
-	    content: '/admin/fenlei/add' //iframe的url
-	});
-}
 </script>

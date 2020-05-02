@@ -39,6 +39,8 @@ public class UserSearchController {
     public String fenleiList() {
         return "user/searchLog";
     }
+
+
     @RequestMapping("/index")
     public String index(String word, Model model) {
         List<Search> searchList = new ArrayList<>();
@@ -88,9 +90,6 @@ public class UserSearchController {
     @RequestMapping("/getAllByLimit")
     @ResponseBody
     public Object getAllByLimit(Search search) {
-        Subject subject = SecurityUtils.getSubject();
-        User user = (User) subject.getPrincipal();
-        search.setUserId(user.getId());
         return searchService.getAllByLimit(search);
     }
 

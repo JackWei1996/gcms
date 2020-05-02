@@ -44,4 +44,9 @@ public class UserGarbageServiceImpl implements UserGarbageService {
     public void save(UserGarbage userGarbage) {
         userGarbageMapper.insert(userGarbage);
     }
+
+    @Override
+    public void deleteById(long id) {
+        userGarbageMapper.deleteByPrimaryKey(id);
+    }
 }

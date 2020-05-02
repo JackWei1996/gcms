@@ -9,12 +9,17 @@
 	<link th:href="@{../../imgs/favicon.ico}" href="../../imgs/favicon.ico" rel="icon" type="image/x-icon" media="all"/>
 	<script type="text/javascript" th:src="@{../../js/jquery.min.js}" src="../../js/jquery.min.js" ></script>
 	<script type="text/javascript" th:src="@{../../js/bootstrap.min.js}" src="../../js/bootstrap.min.js" ></script>
-
+	<script type="text/javascript" th:src="@{/js/jquery/jquery-3.3.1.js}"></script>
+	<script type="text/javascript" th:src="@{/js/echarts/echarts.js}"></script>
+	<script type="text/javascript" th:src="@{/js/echarts/china.js}"></script>
 </head>
 <script type="text/javascript"  th:inline="javascript">
 	var cList = [[${cList}]];
 	var sList = [[${sList}]];
 	var tList = [[${tList}]];
+
+	var vv = 0;
+	var vh = 0;
 
 	console.log(cList);
 	console.log(sList);
@@ -23,6 +28,10 @@
 		var xgcx = $("#xgcx");
 		xgcx.append('<span class="label_title color_1">相关查询：</span>');
 		if (cList){
+			vv = cList[0].value;
+			vh = cList[0].harm;
+			console.log(cList);
+			console.log(vv);
 			for(var i=0; i<cList.length; i++){
 				xgcx.append('<a  class ="new_label" href="/user/search/index?word='+cList[i].content+'">'+cList[i].content+'</a> ');
 			}
@@ -44,6 +53,50 @@
 			}
 		}
 
+		var dom = document.getElementById("container");
+		var myChart = echarts.init(dom);
+		var app = {};
+		option = null;
+		option = {
+			title: {
+				text: '价值和有害饼图',
+				subtext: '每千克/元,危害等级',
+				left: 'center'
+			},
+			tooltip: {
+				trigger: 'item',
+				formatter: '{a} <br/>{b} : {c} ({d}%)'
+			},
+			legend: {
+				orient: 'vertical',
+				left: 'left',
+				data: ['危害等级(1-5级)', '每千克/元']
+			},
+			series: [
+				{
+					name: '价值危害',
+					type: 'pie',
+					radius: '55%',
+					center: ['50%', '60%'],
+					data: [
+						{value: vh, name: '危害等级'},
+						{value: vv, name: '每千克/元'}
+					],
+					emphasis: {
+						itemStyle: {
+							shadowBlur: 10,
+							shadowOffsetX: 0,
+							shadowColor: 'rgba(0, 0, 0, 0.5)'
+						}
+					}
+				}
+			]
+		};
+
+		if (option && typeof option === "object") {
+			myChart.setOption(option, true);
+		}
+
 	});
 
 	function searchWord() {
@@ -52,6 +105,7 @@
 	}
 </script>
 <body style="background-color:#ecf0f1">
+<div id="container" style="height: 80%;width: 30%; float: right; top: 250px; z-index: 100"></div>
 <style type="text/css">
 	.color_1 {
 		color: #3F85F1;

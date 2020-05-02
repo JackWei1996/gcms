@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CategorizationServiceImpl implements CategorizationService {
@@ -28,7 +29,7 @@ public class CategorizationServiceImpl implements CategorizationService {
         List<Categorization> rows = new ArrayList<>();
         try {
             rows = categorizationMapper.getAllByLimit(categorization);
-            if (categorization.getViewCount() == -1){
+            if (categorization.getContent()!=null && !"".equals(categorization.getContent())){
                 categorizationMapper.viewCount(categorization.getContent());
             }
             size = categorizationMapper.countAllByLimit(categorization);
@@ -62,5 +63,20 @@ public class CategorizationServiceImpl implements CategorizationService {
     @Override
     public void viewWord(String word) {
         categorizationMapper.viewCount(word);
+    }
+
+    @Override
+    public Categorization getById(Long id) {
+        return categorizationMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void update(Categorization categorization) {
+        categorizationMapper.updateByPrimaryKeySelective(categorization);
+    }
+
+    @Override
+    public List<Map<String, Object>> tjByTpye() {
+        return categorizationMapper.tjByTpye();
     }
 }

@@ -11,7 +11,7 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="view_count" jdbcType="BIGINT" property="viewCount" />
-    <result column="value" jdbcType="INTEGER" property="value" />
+    <result column="value" jdbcType="DOUBLE" property="value" />
     <result column="harm" jdbcType="INTEGER" property="harm" />
     <result column="info" jdbcType="VARCHAR" property="info" />
   </resultMap>
@@ -151,7 +151,7 @@
       view_count, value, harm, 
       info)
     values (#{id,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
-      #{viewCount,jdbcType=BIGINT}, #{value,jdbcType=INTEGER}, #{harm,jdbcType=INTEGER}, 
+      #{viewCount,jdbcType=BIGINT}, #{value,jdbcType=DOUBLE}, #{harm,jdbcType=INTEGER},
       #{info,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.gcms.pojo.Categorization">
@@ -289,7 +289,7 @@
         view_count = #{viewCount,jdbcType=BIGINT},
       </if>
       <if test="value != null">
-        value = #{value,jdbcType=INTEGER},
+        value = #{value,jdbcType=DOUBLE},
       </if>
       <if test="harm != null">
         harm = #{harm,jdbcType=INTEGER},
@@ -355,4 +355,10 @@
     set view_count = (view_count+1)
     where content like concat('%',#{content},'%')
   </update>
+
+  <select id="tjByTpye"
+          resultType="map">
+   SELECT c.type, COUNT(id) c FROM `categorization` c
+  GROUP BY c.type
+  </select>
 </mapper>

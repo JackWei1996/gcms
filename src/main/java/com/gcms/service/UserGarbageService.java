@@ -6,4 +6,6 @@ public interface UserGarbageService {
     Object getAllByLimit(UserGarbage userGarbage);
 
     void save(UserGarbage userGarbage);
+
+    void deleteById(long parseLong);
 }

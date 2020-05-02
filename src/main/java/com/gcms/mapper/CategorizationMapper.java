@@ -5,6 +5,7 @@ import com.gcms.pojo.CategorizationExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CategorizationMapper {
     /**
@@ -100,4 +101,6 @@ public interface CategorizationMapper {
     int countAllByLimit(Categorization categorization);
 
     void viewCount(@Param("content") String content);
+
+    List<Map<String, Object>> tjByTpye();
 }

@@ -80,9 +80,6 @@ $(function(){
             },
             name: {
                 required:"电话不可为空"
-            },
-            city: {
-                required:"城市不可为空"
             }
         },
         /**//* 设置验证触发事件 */
@@ -112,8 +109,7 @@ function save(){
 	var param = new Object();
 	param.gram = $.trim($("#gram").val());
 	param.type = $.trim($("#type").val());
-	param.name = $.trim($("#name").val());
-	param.city = $.trim($("#city").val());
+	param.title = $.trim($("#title").val());
 
 	console.log(param);
 	var urlStr = "/user/garbage/doAdd";
@@ -135,7 +131,7 @@ function save(){
        			    	parent.layer.closeAll();
        				});
     			}else if(data == "PHONE_ERR"){
-                    layer.alert('该用户不存在！', {icon: 2}, function(indexNo){
+                    layer.alert('请在个人中心填写城市信息！', {icon: 2}, function(indexNo){
                         layer.close();
                         parent.layer.close(indexNo);
                     });
@@ -149,6 +145,28 @@ function save(){
 	});
 }
 
+function change(){
+    var x=document.getElementById("title");
+    x.value=x.value.toUpperCase();
+    console.log(x.value);
+    $.ajax({
+        type:"POST",
+        async:true,  //默认true,异步
+        data:{"word":x.value},
+        url:"/user/garbage/search",
+        success:function(data){
+            console.log(data);
+
+            if (data){
+                $('#show').text("每千克 "+data.value+" 元").show();
+                $("#type").val(data.type);
+            }else {
+                $('#show').text("未找到,默认每千克 1 元").show();
+            }
+        }
+    });
+}
+
 </script>
 </head>
 <body>
@@ -158,26 +176,16 @@ function save(){
 	<form>
 		<table class="form_table" style="border-collapse: collapse;margin-left:20px;margin-top:10px;">
             <tr>
-                <td align="right" >
-                    <span class="need_0">*</span>
-                    <span class="text_ad_0">用户名：</span>
-                </td>
-                <td>
-                    <input id="name" type="text" name="name" class="input_0"/>
-                    <span class="validation_span"></span>
-                </td>
-            </tr>
             <tr>
                 <td align="right" >
                     <span class="need_0">*</span>
-                    <span class="text_ad_0">城市：</span>
+                    <span class="text_ad_0">名称：</span>
                 </td>
                 <td>
-                    <input id="city" type="text" name="city" class="input_0"/>
-                    <span class="validation_span"></span>
+                    <input id="title" type="text" name="title" class="input_0" onchange="change()"/>
+                    <span class="validation_span" id="show"></span>
                 </td>
             </tr>
-            <tr>
                 <td align="right" >
                     <span class="need_0">*</span>
                     <span class="text_ad_0">类型：</span>
@@ -196,14 +204,13 @@ function save(){
 			<tr>
                 <td align="right" >
                     <span class="need_0">*</span>
-                    <span class="text_ad_0">克数：</span>
+                    <span class="text_ad_0">千克数：</span>
                 </td>
                 <td>
                     <input id="gram" type="text" name="gram" class="input_0"/>
                     <span class="validation_span"></span>
                 </td>
             </tr>
-
 			<tr>
 				<td colspan="2" align="left" >
 					<div style="margin-top:10px;margin-bottom:20px;margin-left:120px;">

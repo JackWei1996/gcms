@@ -1,7 +1,9 @@
 package com.gcms.controller.user;
 
+import com.gcms.pojo.Categorization;
 import com.gcms.pojo.User;
 import com.gcms.pojo.UserGarbage;
+import com.gcms.service.CategorizationService;
 import com.gcms.service.UserGarbageService;
 import com.gcms.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller("UserGarbageController")
 @RequestMapping("/user/garbage")
@@ -26,6 +29,8 @@ public class UserGarbageController {
     UserGarbageService userGarbageService;
     @Autowired
     UserService userService;
+    @Autowired
+    private CategorizationService categorizationService;
 
     @RequestMapping("/list")
     public String list() {
@@ -73,19 +78,61 @@ public class UserGarbageController {
     public String doAdd(UserGarbage userGarbage) {
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
+        Categorization c= new Categorization();
+        // 相似查询
+        List<Categorization> categorizationList = categorizationService.searchWord(userGarbage.getTitle());
+        if (categorizationList.size()>0){
+            c =  categorizationList.get(0);
+        }else {
+            c.setValue(1.0);
+        }
         try {
-            User userByPhoneAndName = userService.getUserByPhoneAndName(null, userGarbage.getName());
-            if (userByPhoneAndName == null){
+            if (user == null || user.getCity()==null){
                 return "PHONE_ERR";
             }
             userGarbage.setCreateTime(new Date());
-            userGarbage.setHandUserId(user.getId());
+            userGarbage.setUserId(user.getId());
+            userGarbage.setProvince(user.getProvince());
+            userGarbage.setCity(user.getCity());
+            userGarbage.setArea(user.getArea());
+            userGarbage.setMoney(userGarbage.getGram() * c.getValue());
             userGarbageService.save(userGarbage);
             return "SUCCESS";
         } catch (Exception e) {
             logger.error("添加异常", e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return "ERROR";
+        }
+    }
+
+    /**
+     * 返回查询数据
+     */
+    @RequestMapping("/search")
+    @ResponseBody
+    public Object search(String word) {
+        // 相似查询
+        List<Categorization> categorizationList = categorizationService.searchWord(word);
+        if (categorizationList.size()>0){
+            return categorizationList.get(0);
+        }
+        return null;
+    }
+
+    /**
+     * 删除指南
+     */
+    @ResponseBody
+    @RequestMapping("/del")
+    public String delWord(String[] ids) {
+        try {
+            for (String id : ids){
+                userGarbageService.deleteById(Long.parseLong(id));
+            }
+            return "SUCCESS";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "ERR";
         }
     }
 }

@@ -41,25 +41,17 @@
 </style>
 
 <script type="text/javascript"  th:inline="javascript">
+	var c = [[${c}]];
 
-layui.use('laydate', function(){
-	  var laydate = layui.laydate;
-	  
-	  //执行一个laydate实例
-	  laydate.render({
-	    elem: '#userBirthday' //指定元素
-	  });
-});
-
-function getTime(val){
-	if(val){		
-		val = val.split("T");
-		return val[0]; 
-	}
-	return "";
-}
 
 $(function(){
+	if (c){
+		$("#content").val(c.content);
+		$("#type").val(c.type);
+		$("#value").val(c.value);
+		$("#harm").val(c.harm);
+		$("#info").val(c.info);
+	}
 	//返回按钮
 	$("#backBtu").click(function(){
 		layer.confirm('确认返回吗？', {icon: 3, title:'提示'}, function(index){
@@ -76,6 +68,10 @@ $(function(){
 		param.info = $.trim($("#info").val());
 		console.log(param);
 		var urlStr = "/admin/fenlei/doAdd";
+		if (c){
+			param.id = c.id;
+			urlStr = "/admin/fenlei/doUpdate"
+		}
 
 		layer.confirm('确认保存吗？', {icon: 3, title:'提示'}, function(index){
 			$.ajax({
@@ -152,10 +148,16 @@ function closeSelf(){
 			</tr>
 			<tr style="">
 				<td align="right" >
-					<span class="text_ad_0">有害值：</span>
+					<span class="text_ad_0">有害等级：</span>
 				</td>
 				<td>
-					<input id="harm" type="text" name="harm" class="input_0" value="" />
+					<select id="harm" name="harm" class="input_0">
+						<option value="0">无害</option>
+						<option value="1">一般</option>
+						<option value="2">严重</option>
+						<option value="3">非常危险</option>
+						<option value="4">致命</option>
+					</select>
 					<span class="validation_span"></span>
 				</td>
 			</tr>

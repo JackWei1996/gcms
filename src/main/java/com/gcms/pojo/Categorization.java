@@ -29,6 +29,10 @@ public class  Categorization extends BaseBean{
     private Integer type;
     private Double value;
 
+    public Double getValue() {
+        return value;
+    }
+
     public void setValue(Double value) {
         this.value = value;
     }
