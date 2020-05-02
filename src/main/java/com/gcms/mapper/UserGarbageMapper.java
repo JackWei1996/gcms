@@ -6,6 +6,7 @@ import com.gcms.pojo.UserGarbageExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserGarbageMapper {
     /**
@@ -99,4 +100,8 @@ public interface UserGarbageMapper {
     List<Appointment> getAllByLimit(UserGarbage userGarbage);
 
     int countAllByLimit(UserGarbage userGarbage);
+
+    List<Map<String, Object>> tjMoney(@Param("id") Long id);
+
+    List<Map<String, Object>> tjQuanGuo();
 }

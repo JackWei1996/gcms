@@ -56,7 +56,7 @@ public class CategorizationServiceImpl implements CategorizationService {
     @Override
     public List<Categorization> searchWord(String word) {
         CategorizationExample example = new CategorizationExample();
-        example.createCriteria().andContentLike(word);
+        example.createCriteria().andContentLike("%"+word+"%");
         return categorizationMapper.selectByExample(example);
     }
 

@@ -366,4 +366,17 @@
       </if>
     </where>
   </select>
+
+  <select id="tjMoney"
+          resultType="map">
+      SELECT DATE_FORMAT( ug.create_time, "%Y-%m-%d" ) t, sum(money) m FROM `user_garbage` ug
+      WHERE ug.user_id = #{id}
+      GROUP BY DATE_FORMAT( ug.create_time, "%Y-%m-%d" )
+  </select>
+
+  <select id="tjQuanGuo"
+          resultType="map">
+        SELECT ug.province name, sum(ug.gram) value FROM user_garbage ug
+        GROUP BY ug.province
+  </select>
 </mapper>

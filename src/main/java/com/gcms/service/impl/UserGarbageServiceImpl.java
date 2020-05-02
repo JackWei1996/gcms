@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserGarbageServiceImpl implements UserGarbageService {
@@ -48,5 +49,15 @@ public class UserGarbageServiceImpl implements UserGarbageService {
     @Override
     public void deleteById(long id) {
         userGarbageMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Map<String, Object>> tjMoney(Long id) {
+        return userGarbageMapper.tjMoney(id);
+    }
+
+    @Override
+    public List<Map<String, Object>> tjQuanGuo() {
+        return userGarbageMapper.tjQuanGuo();
     }
 }

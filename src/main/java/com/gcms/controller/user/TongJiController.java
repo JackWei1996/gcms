@@ -1,6 +1,9 @@
 package com.gcms.controller.user;
 
+import com.gcms.pojo.User;
 import com.gcms.service.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,5 +52,41 @@ public class TongJiController {
         model.addAttribute("t3", t3);
         model.addAttribute("t4", t4);
         return "tj/tjFeiLei";
+    }
+
+    @RequestMapping("/tjImcome")
+    public String tjImcome(Model model) {
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User) subject.getPrincipal();
+
+        List<Map<String, Object>> mapList = userGarbageService.tjMoney(user.getId());
+
+        List<String> dt = new ArrayList<>();
+        List<Double> ms = new ArrayList<>();
+        Double sum = 0.0;
+
+        for (Map<String, Object> m: mapList){
+            dt.add((String) m.get("t"));
+            ms.add((Double) m.get("m"));
+            sum += (Double) m.get("m");
+        }
+
+        model.addAttribute("dt", dt);
+        model.addAttribute("ms", ms);
+        model.addAttribute("sum", sum);
+
+        return "tj/tjImcome";
+    }
+
+    @RequestMapping("/tjQuanGuo")
+    public String tjQuanGuo(Model model) {
+        Subject subject = SecurityUtils.getSubject();
+        User user = (User) subject.getPrincipal();
+
+        List<Map<String, Object>> mapList = userGarbageService.tjQuanGuo();
+
+        model.addAttribute("d", mapList);
+
+        return "tj/tjQuanGuo";
     }
 }
