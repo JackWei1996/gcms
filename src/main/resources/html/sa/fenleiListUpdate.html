@@ -34,7 +34,12 @@
 			</td>
 			<td style="width:150px;">
                 <span>类型：</span>
-                <input type="text" id="type" name="type" class="input_0" />
+				<select id="type" name="type" class="input_0">
+					<option value="1">可回收</option>
+					<option value="2">干垃圾</option>
+					<option value="3">湿垃圾</option>
+					<option value="4">有害垃圾</option>
+				</select>
             </td>
 			<td style="">
 			<div class="layui-btn-group">
@@ -95,7 +100,7 @@ $(function(){
 					}
 					return t;
 				}},
-			   {title: '浏览数', name: 'viewCount', width:40},
+			   {title: '查询次数', name: 'viewCount', width:40},
 			   {title: '操作', name: 'op', width:20, renderer:function(val, item, rowIndex){
 				   var buttonStr ='<span class=" layui-btn layui-btn-danger layui-btn-sm" onclick="addRow('+"\'"+item.id+"\'"+')" >修改</span>';
 				   return "<div class='span_btus' >" + buttonStr + "</div>";

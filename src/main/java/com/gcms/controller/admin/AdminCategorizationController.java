@@ -1169,7 +1169,7 @@ public class AdminCategorizationController {
                 List<String> area = c.getArea();
                 for (String a: area){
                     UserGarbage userGarbage = new UserGarbage();
-                    userGarbage.setUserId(Long.parseLong(getUserId(100)+""));
+//                    userGarbage.setUserId(Long.parseLong(getUserId(100)+""));
                     userGarbage.setGram(getGram(100));
                     userGarbage.setMoney(getGram(100));
                     userGarbage.setType(getUserId(4));
