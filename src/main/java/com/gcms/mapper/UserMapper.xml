@@ -160,7 +160,7 @@
     values (#{id,jdbcType=BIGINT}, #{age,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
       #{img,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}#{province,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR})
+      #{createTime,jdbcType=TIMESTAMP},#{province,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.gcms.pojo.User">
     <!--

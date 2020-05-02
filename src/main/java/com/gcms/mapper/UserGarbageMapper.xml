@@ -379,4 +379,10 @@
         SELECT ug.province name, sum(ug.gram) value FROM user_garbage ug
         GROUP BY ug.province
   </select>
+
+  <select id="tjByTpye"
+          resultType="map">
+         SELECT ug.type, sum(ug.gram) c
+        FROM `user_garbage` ug  GROUP BY ug.type;
+  </select>
 </mapper>

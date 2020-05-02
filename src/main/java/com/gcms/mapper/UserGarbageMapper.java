@@ -104,4 +104,6 @@ public interface UserGarbageMapper {
     List<Map<String, Object>> tjMoney(@Param("id") Long id);
 
     List<Map<String, Object>> tjQuanGuo();
+
+    List<Map<String, Object>> tjByTpye();
 }

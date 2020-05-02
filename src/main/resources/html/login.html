@@ -77,7 +77,7 @@ function regist(){
 			$.ajax({
 				type:"POST",
 				async:true,  //默认true,异步
-				data:{"name":name,"password":password,"city":myCity},
+				data:{"name":name,"password":password},
 				dataType:'json',
 				timeout:20000,
 				url:"/doRegist",

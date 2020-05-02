@@ -89,4 +89,28 @@ public class TongJiController {
 
         return "tj/tjQuanGuo";
     }
+
+    @RequestMapping("/tjFeiLeiTouFang")
+    public String tjFeiLeiTouFang(Model model) {
+        Double t1 = 0.0;
+        Double t2 = 0.0;
+        Double t3 = 0.0;
+        Double t4 = 0.0;
+        List<Map<String, Object>> map =  userGarbageService.tjByTpye();
+        for (Map<String, Object> m : map){
+            Integer type = (Integer) m.get("type");
+            switch (type){
+                case 1:t1 = (Double) m.get("c");break;
+                case 2:t2 = (Double) m.get("c");break;
+                case 3:t3 = (Double) m.get("c");break;
+                case 4:t4 = (Double) m.get("c");break;
+            }
+        }
+
+        model.addAttribute("t1", t1);
+        model.addAttribute("t2", t2);
+        model.addAttribute("t3", t3);
+        model.addAttribute("t4", t4);
+        return "tj/tjFeiLeiTouFang";
+    }
 }

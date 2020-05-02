@@ -15,4 +15,6 @@ public interface UserGarbageService {
     List<Map<String, Object>> tjMoney(Long id);
 
     List<Map<String, Object>> tjQuanGuo();
+
+    List<Map<String, Object>> tjByTpye();
 }

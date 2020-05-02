@@ -60,4 +60,9 @@ public class UserGarbageServiceImpl implements UserGarbageService {
     public List<Map<String, Object>> tjQuanGuo() {
         return userGarbageMapper.tjQuanGuo();
     }
+
+    @Override
+    public List<Map<String, Object>> tjByTpye() {
+        return userGarbageMapper.tjByTpye();
+    }
 }
