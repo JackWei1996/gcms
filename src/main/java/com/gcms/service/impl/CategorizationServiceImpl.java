@@ -49,8 +49,14 @@ public class CategorizationServiceImpl implements CategorizationService {
     }
 
     @Override
-    public void add(Categorization categorization) {
-        categorizationMapper.insert(categorization);
+    public int add(Categorization categorization) {
+        CategorizationExample example = new CategorizationExample();
+        example.createCriteria().andContentEqualTo(categorization.getContent());
+        List<Categorization> categorizations = categorizationMapper.selectByExample(example);
+        if (categorizations.size() > 0){
+            return 0;
+        }
+        return categorizationMapper.insert(categorization);
     }
 
     @Override

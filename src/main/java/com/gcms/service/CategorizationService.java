@@ -10,7 +10,7 @@ public interface CategorizationService {
 
     void deleteById(Long id);
 
-    void add(Categorization categorization);
+    int add(Categorization categorization);
 
     List<Categorization> searchWord(String word);
 

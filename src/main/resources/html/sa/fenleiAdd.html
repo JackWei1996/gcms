@@ -72,6 +72,26 @@ $(function(){
 			param.id = c.id;
 			urlStr = "/admin/fenlei/doUpdate"
 		}
+		console.log(param.content.length==0);
+		console.log(param.value.length===0);
+		console.log(param.info.length);
+		if (!param.content || 0==param.content.length ){
+			console.log("内容不可为空");
+			layer.alert('内容不可为空', {icon: 0});
+			return false;
+		}else if (!param.type){
+			layer.alert('类型不可为空', {icon: 0});
+			return false;
+		}else if (!param.value || 0 ==param.value.length ){
+			layer.alert('价值不可为空', {icon: 0});
+			return false;
+		}else if (!param.harm){
+			layer.alert('危害不可为空', {icon: 0});
+			return false;
+		}else if (!param.info|| 0==param.info.length ){
+			layer.alert('简介不可为空', {icon: 0});
+			return false;
+		}
 
 		layer.confirm('确认保存吗？', {icon: 3, title:'提示'}, function(index){
 			$.ajax({
@@ -87,6 +107,10 @@ $(function(){
 							parent.$("#add_iframe iframe").attr("src", "");
 							parent.$("div").first().show();
 							parent.$("#add_iframe").hide();
+							parent.layer.closeAll();
+						});
+					}else if ("RRR" == data){
+						layer.alert('内容重复！', {icon: 2}, function(indexNo){
 							parent.layer.closeAll();
 						});
 					}else{
@@ -116,6 +140,7 @@ function closeSelf(){
 
 			<tr style="">
 				<td align="right" >
+					<span class="need_0">*</span>
 					<span class="text_ad_0">内容：</span>
 				</td>
 				<td>
@@ -126,6 +151,7 @@ function closeSelf(){
 
 			<tr>
 				<td style="" align="right">
+					<span class="need_0">*</span>
 					<span class="text_ad_0">类型：</span>
 				</td>
 				<td >
@@ -139,6 +165,7 @@ function closeSelf(){
 			</tr>
 			<tr style="">
 				<td align="right" >
+					<span class="need_0">*</span>
 					<span class="text_ad_0">价值：</span>
 				</td>
 				<td>
@@ -148,6 +175,7 @@ function closeSelf(){
 			</tr>
 			<tr style="">
 				<td align="right" >
+					<span class="need_0">*</span>
 					<span class="text_ad_0">有害等级：</span>
 				</td>
 				<td>
@@ -163,6 +191,7 @@ function closeSelf(){
 			</tr>
 			<tr style="">
 				<td align="right" >
+					<span class="need_0">*</span>
 					<span class="text_ad_0">简介：</span>
 				</td>
 				<td>
