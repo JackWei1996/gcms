@@ -345,10 +345,14 @@
       <if test="userId!=null and userId !=''" >
         AND user_id = #{userId}
       </if>
-      <if test="city!=null and city !=''" >
-        AND (province like CONCAT('%', #{city}, '%')
-        OR city like CONCAT('%', #{city}, '%')
-        OR area like CONCAT('%', #{city}, '%') )
+      <if test="city!=null and city!=''">
+        and city like concat('%',#{city},'%')
+      </if>
+      <if test="area!=null and area!=''">
+        and area like concat('%',#{area},'%')
+      </if>
+      <if test="province!=null and province!=''">
+        and province like concat('%',#{province},'%')
       </if>
     </where>
     ORDER BY id DESC
@@ -369,10 +373,14 @@
       <if test="userId!=null and userId !=''" >
         AND user_id = #{userId}
       </if>
-      <if test="city!=null and city !=''" >
-        AND (province like CONCAT('%', #{city}, '%')
-        OR city like CONCAT('%', #{city}, '%')
-        OR area like CONCAT('%', #{city}, '%') )
+      <if test="city!=null and city!=''">
+        and city like concat('%',#{city},'%')
+      </if>
+      <if test="area!=null and area!=''">
+        and area like concat('%',#{area},'%')
+      </if>
+      <if test="province!=null and province!=''">
+        and province like concat('%',#{province},'%')
       </if>
     </where>
   </select>

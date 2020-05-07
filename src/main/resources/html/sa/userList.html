@@ -33,8 +33,16 @@
 				<input type="text" id="name" name="name" class="input_0" />
 			</td>
 			<td style="width:150px;">
-				<span>城市模糊查询：</span>
+				<span>省份查询：</span>
+				<input type="text" id="province" name="province" class="input_0" />
+			</td>
+			<td style="width:150px;">
+				<span>城市查询：</span>
 				<input type="text" id="city" name="city" class="input_0" />
+			</td>
+			<td style="width:150px;">
+				<span>区域查询：</span>
+				<input type="text" id="area" name="area" class="input_0" />
 			</td>
 			<td style="">
 			<div class="layui-btn-group">
@@ -69,7 +77,9 @@ $(function(){
         params:function(){
         	var param = new Object();
         	param.name = $.trim($("#name").val());
+        	param.province = $.trim($("#province").val());
         	param.city = $.trim($("#city").val());
+        	param.area = $.trim($("#area").val());
         	return param;
         },
         cols: [{title: 'ID', name: 'id', width:10, hidden:true},

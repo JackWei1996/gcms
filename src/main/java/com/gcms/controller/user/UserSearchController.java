@@ -62,6 +62,9 @@ public class UserSearchController {
                 model.addAttribute("typeInclude", byId.getInclude());
                 model.addAttribute("typeAskTitle", byId.getType()+"投放要求");
                 model.addAttribute("typeAsk", byId.getAsk());
+                model.addAttribute("tt", "属于");
+            }else {
+                model.addAttribute("tt", "  目前本系统未收录!!!");
             }
 
             Search search = new Search();

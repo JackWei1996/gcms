@@ -455,10 +455,13 @@
         and name like concat('%',#{name},'%')
       </if>
       <if test="city!=null and city!=''">
-        and (province like concat('%',#{city},'%')
-        OR city like concat('%',#{city},'%')
-        OR address like concat('%',#{city},'%')
-        OR area like concat('%',#{city},'%'))
+        and city like concat('%',#{city},'%')
+      </if>
+      <if test="area!=null and area!=''">
+        and area like concat('%',#{area},'%')
+      </if>
+      <if test="province!=null and province!=''">
+        and province like concat('%',#{province},'%')
       </if>
     </where>
   </sql>
