@@ -109,7 +109,7 @@ public class UserSearchController {
                 search.setViewCount(old.getViewCount()+1);
                 searchService.update(search);
             }else {
-                search.setViewCount(0L);
+                search.setViewCount(1L);
                 search.setUserId(user.getId());
                 search.setCreateTime(new Date());
                 searchService.save(search);

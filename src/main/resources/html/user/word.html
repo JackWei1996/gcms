@@ -130,6 +130,12 @@ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
         // 3、获取CKEditor带HTML标签的文本
         var CHtml= CKEDITOR.instances.editor.getData();
         param.content = $.trim(CHtml);
+        if (!param.content){
+            layer.alert('请填写内容！', {icon: 3}, function(indexNo){
+                layer.closeAll();
+            });
+            return;
+        }
         console.log(param);
         var urlStr = "/user/notice/addWord";
 

@@ -56,6 +56,8 @@
 		var dom = document.getElementById("container");
 		var myChart = echarts.init(dom);
 		var app = {};
+		var dom = document.getElementById("dj");
+
 		option = null;
 		option = {
 			title: {
@@ -104,7 +106,8 @@
 	}
 </script>
 <body style="background-color:#ecf0f1">
-<div id="container" style="height: 85%;width: 33%; float: right; top: 250px; z-index: 100"></div>
+<div id="container" style="height: 85%;width: 35%; float: right; top: 250px; z-index: 100"></div>
+
 <style type="text/css">
 	.color_1 {
 		color: #3F85F1;
@@ -380,7 +383,10 @@
 			<hr style="border-color: #d0d0d0">
 		</div>
 	</div>
- 	
+	<div id="dj" style="height: 85%;width: 35%; float: right; top: 300px; z-index: 100">
+		危害等级:<br/>
+		0级: 无害; 1级:一般; 2级:严重; 3级;非常危险; 4级:致命
+	</div>
 
  	<div class="row">
 		<div class="col-md-offset-1 col-md-10 col-xs-12">

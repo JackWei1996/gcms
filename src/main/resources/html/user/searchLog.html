@@ -65,7 +65,7 @@ $(function(){
         indexCol: true,  //索引列
         params:function(){
         	var param = new Object();
-        	param.info = $.trim($("#info").val());
+        	param.content = $.trim($("#content").val());
         	return param;
         },
         cols: [{title: 'ID', name: 'id', width:60, hidden:true},

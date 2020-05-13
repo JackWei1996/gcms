@@ -142,21 +142,30 @@ function save(){
 		//修改
 		param.id = manageUser.id
 	}
-
-	if (param.address){
+	console.log(param);
+	if (!param.address){
 		layer.alert('请填写地址！', {icon: 3}, function(indexNo){
 			layer.closeAll();
 		});
+		return;
 	}
-	if (param.phone){
-		layer.alert('请填写电话！', {icon: 3}, function(indexNo){
+	if (!param.email|| !param.email.content('@')){
+		layer.alert('请填写正确的邮箱！', {icon: 3}, function(indexNo){
 			layer.closeAll();
 		});
+		return;
 	}
-	if (param.name){
+	if (!param.phone || param.phone.length!=11){
+		layer.alert('请填写正确电话！', {icon: 3}, function(indexNo){
+			layer.closeAll();
+		});
+		return;
+	}
+	if (!param.name){
 		layer.alert('请填写姓名！', {icon: 3}, function(indexNo){
 			layer.closeAll();
 		});
+		return;
 	}
 	
 	layer.confirm('确认保存吗？', {icon: 3, title:'提示'}, function(index){
