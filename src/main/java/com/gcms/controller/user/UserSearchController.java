@@ -74,7 +74,7 @@ public class UserSearchController {
                 byContent.setViewCount(byContent.getViewCount()+1);
                 searchService.update(byContent);
             }else {
-                search.setViewCount(0L);
+                search.setViewCount(1L);
                 search.setCreateTime(new Date());
                 searchService.save(search);
             }

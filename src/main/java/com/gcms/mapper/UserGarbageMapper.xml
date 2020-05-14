@@ -339,6 +339,9 @@
     <include refid="Base_Column_List" />
     FROM `user_garbage`
     <where>
+      <if test="title!=null and title!=''">
+        and title like concat('%',#{title},'%')
+      </if>
       <if test="type!=null and type !=''" >
         AND type = #{type}
       </if>
@@ -367,6 +370,9 @@
     SELECT count(id)
     FROM `user_garbage`
     <where>
+      <if test="title!=null and title!=''">
+        and title like concat('%',#{title},'%')
+      </if>
       <if test="type!=null and type !=''" >
         AND type = #{type}
       </if>

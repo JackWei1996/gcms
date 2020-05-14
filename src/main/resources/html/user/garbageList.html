@@ -29,9 +29,14 @@
 	<table class="param_table" style="margin-left:10px;" >
 		<tr>
 			<td style="width:150px;">
+				<span>名称：</span>
+				<input type="text" id="title" name="title" class="input_0" />
+			</td>
+			<td style="width:150px;">
 				<!--类型:1可回收,2干垃圾,3湿垃圾,4有害垃圾-->
 				<span>类型：</span>
 				<select id="type" name="type" class="input_0">
+					<option value="">全部</option>
 					<option value="1">可回收</option>
 					<option value="2">干垃圾</option>
 					<option value="3">湿垃圾</option>
@@ -71,6 +76,7 @@ $(function(){
         indexCol: true,  //索引列
         params:function(){
         	var param = new Object();
+			param.title = $.trim($("#title").val());
         	param.type = $.trim($("#type").val());
         	return param;
         },

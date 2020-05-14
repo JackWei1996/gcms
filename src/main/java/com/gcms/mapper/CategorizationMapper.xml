@@ -329,6 +329,9 @@
      <if test="type!=null and type !=''" >
        AND type = #{type}
      </if>
+     <if test="harm!=null" >
+       AND harm = #{harm}
+     </if>
    </where>
   ORDER BY id DESC
   <if test="limit!=null">
@@ -347,6 +350,9 @@
       </if>
       <if test="type!=null and type !=''" >
         AND type = #{type}
+      </if>
+      <if test="harm!=null" >
+        AND harm = #{harm}
       </if>
     </where>
   </select>
