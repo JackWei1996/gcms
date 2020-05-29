@@ -149,7 +149,7 @@ function save(){
 		});
 		return;
 	}
-	if (!param.email|| !param.email.content('@')){
+	if (!param.email|| param.email.indexOf('@')==-1){
 		layer.alert('请填写正确的邮箱！', {icon: 3}, function(indexNo){
 			layer.closeAll();
 		});
